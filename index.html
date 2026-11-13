@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEL 融入數學領域｜2026.11.13 工作坊</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1f3f73; --navy-2:#2b5597; --navy-ink:#13284a;
+  --green:#3c7a2e; --green-soft:#e6f0df;
+  --paper:#f6f8fc; --card:#ffffff; --line:#d7deea; --muted:#5b6780;
+  --self:#e9a8b4; --self-bg:#fbeef1;
+  --other:#f2c96b; --other-bg:#fdf5e1;
+  --group:#8fb3e6; --group-bg:#eaf1fb;
+  --alert:#e2522f; --alert-bg:#fff1ec;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"Noto Sans TC",system-ui,sans-serif;background:var(--paper);color:var(--navy-ink);line-height:1.7;font-size:16px}
+a{color:var(--navy-2)}
+button{font-family:inherit;cursor:pointer}
+
+/* ===== Header ===== */
+header{background:var(--navy);color:#fff;padding:18px 20px 0;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;right:-80px;top:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.head-row{max-width:1180px;margin:0 auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.logo{width:64px;height:64px;border-radius:12px;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain}
+.logo .fallback{font-weight:900;color:var(--navy);font-size:13px;text-align:center;line-height:1.2}
+.title-block{flex:1;min-width:240px}
+.title-block h1{margin:0;font-size:clamp(20px,3.2vw,30px);font-weight:900;letter-spacing:.5px}
+.title-block p{margin:2px 0 0;opacity:.85;font-size:14.5px}
+.head-meta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.copyright{background:#ffd34d;color:#3a2a00;font-weight:700;padding:6px 12px;border-radius:999px;font-size:13.5px;box-shadow:0 0 0 3px rgba(255,211,77,.35)}
+.slides-link{background:#fff;color:var(--navy);font-weight:700;padding:5px 14px;border-radius:999px;font-size:14px;text-decoration:none}
+.slides-link:hover{background:#ffd34d}
+.lecturer{background:rgba(255,255,255,.12);padding:5px 12px;border-radius:999px;font-size:14px;display:flex;gap:8px;align-items:center}
+
+/* ===== Placeholder markers ===== */
+.ph{display:inline-flex;align-items:center;gap:4px;background:var(--alert);color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;animation:blink 1.2s ease-in-out infinite;white-space:nowrap;vertical-align:middle}
+.ph-box{border:2px dashed var(--alert);background:var(--alert-bg);border-radius:var(--r);padding:14px 16px;position:relative}
+.ph-box .ph{position:absolute;top:-12px;left:14px}
+.bounce{display:inline-block;animation:bounce 1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes bounce{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+
+/* ===== Tabs ===== */
+nav{max-width:1180px;margin:14px auto 0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;position:relative;z-index:1}
+nav button{border:0;background:rgba(255,255,255,.08);color:#dfe7f5;padding:10px 14px;border-radius:10px 10px 0 0;font-size:14.5px;white-space:nowrap;font-weight:500}
+nav button .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.18);font-size:12px;margin-right:6px}
+nav button[aria-selected=true]{background:var(--paper);color:var(--navy);font-weight:700}
+nav button[aria-selected=true] .n{background:var(--green);color:#fff}
+.subnav{display:flex;gap:8px;flex-wrap:wrap;margin:-8px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.subnav a{text-decoration:none;color:var(--navy);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:6px}
+.subnav a span{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e3e9f3;font-size:12px}
+.subnav a.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.subnav a.on span{background:var(--green);color:#fff}
+nav .sep{width:1px;background:rgba(255,255,255,.25);margin:8px 4px;flex:none}
+
+main{max-width:1180px;margin:0 auto;padding:26px 20px 90px}
+section.page{display:none;animation:fade .25s ease}
+section.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.page-head{margin-bottom:18px}
+.kicker{color:var(--green);font-weight:700;font-size:13.5px;letter-spacing:1px}
+.page-head h2{margin:2px 0 6px;font-size:clamp(22px,3vw,30px);font-weight:900;color:var(--navy)}
+.page-head p{margin:0;color:var(--muted);max-width:820px}
+h3{color:var(--navy);font-size:19px;margin:28px 0 10px;display:flex;align-items:center;gap:8px}
+h3::before{content:"";width:6px;height:20px;background:var(--green);border-radius:3px}
+.src{font-size:12.5px;color:var(--muted);margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.tag{display:inline-block;font-size:12.5px;padding:2px 10px;border-radius:999px;background:var(--green-soft);color:var(--green);font-weight:700;margin:2px 4px 2px 0}
+.btn{border:0;background:var(--navy);color:#fff;padding:9px 16px;border-radius:10px;font-size:14.5px;font-weight:700}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.green{background:var(--green)}
+.btn:disabled{opacity:.5}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--r);overflow:hidden;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left;padding:10px 12px;font-weight:700}
+td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#f3f6fb}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+
+/* ===== Flow map ===== */
+.progress{display:flex;align-items:center;gap:12px;margin:6px 0 18px}
+.bar{flex:1;height:12px;background:#e3e9f3;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#6fae4f);transition:width .4s}
+.map{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.stop{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px;position:relative;transition:.2s}
+.stop:hover{border-color:var(--navy-2);transform:translateY(-2px)}
+.stop.done{border-color:var(--green);background:linear-gradient(180deg,#fff,var(--green-soft))}
+.stop .num{width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:900;font-size:17px}
+.stop.done .num{background:var(--green)}
+.stop .badge{position:absolute;right:14px;top:14px;font-size:26px;filter:grayscale(1);opacity:.35;transition:.3s}
+.stop.done .badge{filter:none;opacity:1;transform:scale(1.15)}
+.stop h4{margin:10px 0 2px;font-size:17px;color:var(--navy)}
+.stop p{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.stop .time{font-size:13px;margin-bottom:10px}
+.stop .subs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.stop .subs a{font-size:12.5px;background:#eef2f8;color:var(--navy);text-decoration:none;border-radius:999px;padding:2px 10px}
+.stop .subs a:hover{background:#dfe8f6}
+.stop .acts{display:flex;gap:8px;flex-wrap:wrap}
+.stop .acts button{font-size:13px;padding:6px 12px}
+.flow-intro{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:22px}
+
+/* ===== CASEL ===== */
+.five{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.flip{perspective:900px;height:250px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:var(--r);backface-visibility:hidden;padding:16px;display:flex;flex-direction:column}
+.flip .f{background:#fff;border:1px solid var(--line);align-items:center;justify-content:center;text-align:center}
+.flip .f .ic{font-size:38px}
+.flip .f h4{margin:8px 0 2px;color:var(--green);font-size:20px}
+.flip .f small{color:var(--muted)}
+.flip .b{background:var(--navy);color:#fff;transform:rotateY(180deg);font-size:14.5px;overflow:auto}
+.flip .b h4{margin:0 0 6px;color:#bfe3a8}
+.flip .b ul{margin:0;padding-left:18px}
+
+/* ===== Sub tabs ===== */
+.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.subtabs button{border:1.5px solid var(--navy);background:#fff;color:var(--navy);padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px}
+.subtabs button.on{background:var(--navy);color:#fff}
+.sub{display:none}.sub.on{display:block}
+.fw-row{display:grid;grid-template-columns:200px 1fr;border-top:1px solid var(--line)}
+.fw-row:first-child{border-top:0}
+.fw-row .k{background:#dfe8f6;padding:14px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.fw-row .k b{color:var(--green);font-size:18px}
+.fw-row .k small{color:var(--muted)}
+.fw-row .v{padding:14px 16px;background:#fff}
+.fw{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.see-group{font-weight:900;color:var(--navy);margin:16px 0 8px}
+
+.seed-axis{border-radius:var(--r);padding:14px;margin-bottom:14px}
+.seed-axis.self{background:var(--self-bg);border-left:6px solid var(--self)}
+.seed-axis.other{background:var(--other-bg);border-left:6px solid var(--other)}
+.seed-axis.group{background:var(--group-bg);border-left:6px solid var(--group)}
+.seed-axis h4{margin:0 0 8px;font-size:18px}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 14px}
+details summary{cursor:pointer;padding:10px 0;font-weight:700;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"＋";color:var(--green);font-weight:900}
+details[open] summary::after{content:"－"}
+details ul{margin:0 0 12px;padding-left:20px}
+
+.matrix td:first-child{font-weight:700;color:var(--green);white-space:nowrap}
+
+/* ===== K12 ===== */
+.k12-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.grade-scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px}
+input[type=range]{width:100%;accent-color:var(--green)}
+.grade-now{font-size:22px;font-weight:900;color:var(--navy)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:13.5px}
+.chips button.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.k12-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.goal{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;border-top:5px solid var(--self)}
+.goal.B{border-top-color:var(--other)}.goal.C{border-top-color:var(--group)}
+.goal .path{font-size:12.5px;color:var(--muted)}
+.goal .scn{font-weight:900;color:var(--navy);font-size:16.5px}
+.goal .txt{margin-top:6px;font-size:15.5px}
+.goal .nb{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.goal .nb span{font-size:12px;background:#f0f3f8;border-radius:6px;padding:2px 7px;color:var(--muted)}
+.mode-toggle{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+
+/* ===== Indicators ===== */
+.principles{display:flex;flex-wrap:wrap;gap:8px}
+.principles span{background:#fff;border:1.5px solid var(--green);color:var(--green);padding:5px 12px;border-radius:999px;font-weight:700;font-size:14px}
+.ind-face{border:1px solid var(--line);border-radius:var(--r);background:#fff;margin-bottom:14px;overflow:hidden}
+.ind-face .hd{display:grid;grid-template-columns:110px 1fr;gap:0}
+.ind-face .hd .nm{background:var(--navy);color:#fff;padding:16px 10px;text-align:center;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center}
+.ind-face .hd .ds{padding:14px 16px;font-size:14.5px}
+.ind-face .hd .ds .tags{margin-top:6px}
+.ind-face .hd .ds .tags span{font-size:12px;background:#f0f3f8;border-radius:6px;padding:2px 7px;margin:2px 4px 2px 0;display:inline-block;color:var(--muted)}
+.ind-list{padding:4px 16px 14px;border-top:1px dashed var(--line)}
+.ind{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid #eef1f6}
+.ind:last-child{border-bottom:0}
+.ind b{background:var(--green);color:#fff;border-radius:8px;display:grid;place-items:center;height:32px;font-size:14px}
+
+/* ===== Integration ===== */
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.type{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;border-top:6px solid var(--navy-2)}
+.type.pink{border-top-color:var(--self)}
+.type h4{margin:0 0 4px;color:var(--navy);font-size:18px}
+.type .key{color:#c0392b;font-weight:700}
+.type ul{padding-left:18px;margin:8px 0 0;font-size:14.5px}
+.quiz{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.quiz .q{font-size:18px;font-weight:700;color:var(--navy);margin:6px 0 12px}
+.quiz .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.quiz .opts button{border:1.5px solid var(--line);background:#fff;padding:10px;border-radius:10px;font-size:14.5px;text-align:left}
+.quiz .opts button.ok{border-color:var(--green);background:var(--green-soft)}
+.quiz .opts button.no{border-color:var(--alert);background:var(--alert-bg)}
+.quiz .fb{margin-top:12px;min-height:26px;font-size:14.5px}
+
+/* ===== SEL-PACK ===== */
+.venn-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center}
+.venn svg{width:100%;height:auto}
+.venn .zone{cursor:pointer;transition:opacity .2s}
+.venn .zone:hover{opacity:.85}
+.venn text{pointer-events:none;font-family:"Noto Sans TC",sans-serif}
+.venn-info{min-height:200px}
+.venn-info h4{margin:0 0 6px;color:var(--green);font-size:20px}
+pre.tpl{white-space:pre-wrap;background:#0f2140;color:#e6eefb;border-radius:12px;padding:16px;font-size:14px;font-family:inherit;margin:0}
+.copy-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap}
+
+/* ===== AI / Groups ===== */
+.ai-hero{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;align-items:center}
+.ai-link{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.ai-orb{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7fb2ff,var(--navy));display:grid;place-items:center;font-size:52px;box-shadow:0 10px 30px rgba(31,63,115,.35);animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+.prompt{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.prompt .pt{font-weight:700;color:var(--navy)}
+.prompt .pb{background:#f3f6fb;border-radius:8px;padding:10px;font-size:14.5px;white-space:pre-wrap}
+.prompt button{align-self:flex-end}
+.groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.gcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;position:relative}
+.gcard .gn{font-size:28px;font-weight:900;color:var(--navy)}
+.gcard a{display:inline-block;margin-top:8px;font-weight:700;text-decoration:none;background:var(--green);color:#fff;padding:6px 14px;border-radius:8px;font-size:14px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;padding:10px 0 10px 44px;position:relative;border-bottom:1px solid #eef1f6}
+.steps li::before{content:counter(s);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:900;font-size:14px}
+
+/* ===== Toolbox ===== */
+.fab{position:fixed;right:18px;bottom:18px;z-index:20;background:var(--green);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.2);font-size:15px}
+.drawer{position:fixed;right:18px;bottom:76px;z-index:20;width:min(360px,calc(100vw - 36px));max-height:75vh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.25);padding:16px;display:none}
+.drawer.on{display:block}
+.drawer .tt{display:flex;gap:6px;margin-bottom:12px}
+.drawer .tt button{flex:1;border:0;background:#eef2f8;border-radius:8px;padding:7px;font-weight:700;font-size:13.5px;color:var(--navy)}
+.drawer .tt button.on{background:var(--navy);color:#fff}
+.tool{display:none;text-align:center}.tool.on{display:block}
+.timer-d{font-size:52px;font-weight:900;color:var(--navy);font-variant-numeric:tabular-nums}
+.timer-d.end{color:var(--alert);animation:blink .6s infinite}
+.row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.row button{border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:13.5px}
+.draw-out{font-size:44px;font-weight:900;color:var(--green);min-height:66px}
+.breath{width:150px;height:150px;margin:10px auto;border-radius:50%;background:radial-gradient(circle,#bfe3a8,var(--green));transform:scale(.55);transition:transform 4s ease-in-out}
+.breath.in{transform:scale(1)}
+.breath-t{font-weight:700;color:var(--navy);min-height:28px}
+
+/* ===== SAFE ===== */
+.safe{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.safe .s{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;border-top:6px solid var(--navy-2)}
+.safe .s .L{font-size:46px;font-weight:900;color:var(--navy);line-height:1}
+.safe .s .L small{font-size:18px;font-weight:700;color:var(--navy-2)}
+.safe .s .zh{color:var(--green);font-weight:900;margin:4px 0 8px}
+.safe .s p{margin:0;font-size:14.5px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eef1f6;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--green);margin-top:3px;flex:none}
+/* ===== Motivation ===== */
+.sdt{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sdt .n{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.sdt .n h4{margin:0;color:var(--navy);font-size:20px}
+.sdt .n .en{color:var(--muted);font-size:13px}
+.sdt .n .core{margin:8px 0;font-size:15px}
+.sdt .n .core em{font-style:normal;color:#c0392b;font-weight:700}
+.sdt .n .yn{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13.5px}
+.sdt .n .yn div{border-radius:8px;padding:6px 8px}
+.sdt .n .y{background:var(--green-soft)}.sdt .n .x{background:var(--alert-bg)}
+.cont{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.cont button{border:0;border-radius:10px;padding:12px 6px;color:#fff;font-weight:700;font-size:14.5px;line-height:1.3}
+.cont button small{display:block;font-weight:400;font-size:11.5px;opacity:.85}
+.cont button.on{outline:3px solid var(--navy-ink);outline-offset:2px}
+.cont-arrow{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:6px 2px 0}
+.cont-info{margin-top:12px;font-size:16px}
+.flowk{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.flowk .b{border-radius:var(--r);padding:16px;color:#fff}
+.flowk .b h4{margin:0 0 6px;font-size:18px}
+.flowk .ar{display:grid;place-items:center;font-size:26px;color:var(--navy)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vs .col{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:#fff}
+.vs .col .hd{padding:12px 16px;color:#fff;font-weight:900;font-size:17px}
+.vs ol{margin:0;padding:10px 16px 14px 36px}
+.vs li{padding:6px 0}
+.oneline{background:var(--navy-ink);color:#fff;border-radius:var(--r);padding:14px 18px;font-weight:700;font-size:17px;margin-top:12px}
+@media (max-width:900px){.safe{grid-template-columns:1fr 1fr}.sdt,.vs{grid-template-columns:1fr}.flowk{grid-template-columns:1fr}.flowk .ar{transform:rotate(90deg)}.cont{grid-template-columns:1fr}}
+@media (max-width:560px){.safe{grid-template-columns:1fr}}
+
+.mx{margin-top:10px;background:#f3f6fb;border-left:4px solid var(--navy-2);border-radius:8px;padding:8px 10px;font-size:14px}
+.say{margin-top:8px;background:#fff8e1;border-radius:10px;padding:10px 14px;font-size:16px}
+.push{margin-top:12px;color:#c0392b;font-size:15px}
+.hl{color:#c0392b;font-weight:700;font-style:normal}
+.stars{color:#d9a400;letter-spacing:1px;white-space:nowrap}
+.strat-tbl td small{color:var(--muted)}
+.strat-tbl tr{cursor:pointer}
+.strat-tbl tr:hover td{background:#e6eefb}
+.meta{background:var(--navy-ink);color:#fff;border-radius:var(--r);padding:14px 18px;margin-top:12px}
+.meta b.hl{color:#ffb4a0}
+.sc-grid{display:grid;gap:16px}
+.sc{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;scroll-margin-top:12px}
+.sc .top{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.sc .top h4{margin:0;font-size:19px;color:var(--navy)}
+.sc .top h4 small{color:var(--green);font-size:15px}
+.sc .top .m{font-size:13.5px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap}
+.sc .top .m span{background:#f0f3f8;border-radius:6px;padding:2px 8px}
+.sc .body{display:grid;grid-template-columns:1.4fr 1fr}
+.sc .how{padding:14px 18px}
+.sc .how ol{margin:6px 0 0;padding-left:22px}
+.sc .how li{padding:3px 0}
+.sc .side{background:#f7f9fc;border-left:1px solid var(--line);padding:14px 18px;font-size:14.5px}
+.sc .lbl{font-weight:900;color:#fff;background:#4b5563;display:inline-block;padding:1px 10px;border-radius:6px;font-size:13px;margin-bottom:6px}
+.sc .side .lbl.f{background:var(--green)}
+.sc .side .lbl.w{background:#b7791f}
+.sc .side p{margin:0 0 8px}
+.sc .ref{padding:8px 18px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line)}
+.perma{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.perma .p{border-radius:16px;padding:14px;color:#fff;min-height:190px}
+.perma .p .L{font-size:44px;font-weight:900;line-height:1}
+.perma .p h4{margin:6px 0 2px;font-size:18px}
+.perma .p small{opacity:.9}
+.perma .p p{margin:8px 0 0;font-size:14px}
+.ws textarea{width:100%;min-height:64px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:15px;resize:vertical}
+.ws td:first-child{width:170px}
+@media (max-width:900px){.sc .body{grid-template-columns:1fr}.sc .side{border-left:0;border-top:1px solid var(--line)}.perma{grid-template-columns:1fr 1fr}.cont{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.perma{grid-template-columns:1fr}.ws td:first-child{width:auto}}
+
+.star-helper{display:flex;align-items:center;gap:16px;text-decoration:none;color:#fff;background:linear-gradient(120deg,#1f3f73,#3c7a2e);border-radius:18px;padding:18px 20px;margin-bottom:18px;position:relative;box-shadow:0 10px 26px rgba(31,63,115,.25);transition:transform .2s}
+.star-helper:hover{transform:translateY(-2px)}
+.sh-badge{position:absolute;top:-11px;left:18px;background:#ffd34d;color:#3a2a00;font-weight:900;font-size:12.5px;padding:2px 10px;border-radius:999px}
+.sh-ic{font-size:40px;flex:none}
+.sh-txt{flex:1;display:flex;flex-direction:column}
+.sh-txt b{font-size:19px}
+.sh-txt small{opacity:.9;font-size:14px}
+.sh-go{background:#fff;color:var(--navy);font-weight:900;padding:8px 16px;border-radius:10px;white-space:nowrap}
+@media (max-width:560px){.star-helper{flex-wrap:wrap}.sh-go{width:100%;text-align:center}}
+.tune-wrap{display:grid;gap:16px}
+.lev{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px}
+.lev b{color:var(--navy);margin-right:4px}
+.lev span{background:var(--green-soft);color:var(--green);font-weight:700;font-size:13px;padding:3px 10px;border-radius:999px}
+.frow{display:grid;grid-template-columns:140px 1fr 160px;gap:10px;margin-bottom:10px}
+.tune-in label{display:flex;flex-direction:column;font-weight:700;color:var(--navy);font-size:14px;gap:4px}
+.tune-in input,.tune-in select,.tune-in textarea{font-family:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-weight:400;color:var(--navy-ink);background:#fff}
+.tune-in textarea{resize:vertical;line-height:1.6}
+.tnote{font-size:13px;color:var(--muted);margin:6px 0 4px}
+.tempty{color:var(--muted);text-align:center;padding:40px 10px}
+.md{font-size:15.5px;line-height:1.75}
+.md h2{font-size:20px;color:var(--navy);border-bottom:2px solid var(--green-soft);padding-bottom:4px;margin:22px 0 10px}
+.md h3{font-size:17px;margin:16px 0 6px}
+.md h3::before{height:16px}
+.md h4{color:var(--navy);margin:12px 0 4px}
+.md table{margin:8px 0 14px;border:1px solid var(--line);font-size:14.5px}
+.md ul,.md ol{padding-left:22px;margin:6px 0}
+.md blockquote{margin:8px 0;border-left:4px solid var(--green);background:#f3f8ef;padding:8px 12px;border-radius:6px}
+.md p{margin:6px 0}
+.md .tblw{overflow-x:auto}
+.cursor::after{content:"▍";animation:blink 1s infinite;color:var(--green)}
+@media (max-width:700px){.frow{grid-template-columns:1fr}}
+
+.hint{display:inline-grid;place-items:center;margin-left:6px;font-size:13px;width:22px;height:22px;border-radius:50%;background:#ffd34d;font-style:normal;animation:hintpulse 2s ease-in-out infinite;box-shadow:0 0 0 0 rgba(255,211,77,.7)}
+@keyframes hintpulse{0%{box-shadow:0 0 0 0 rgba(255,211,77,.7)}70%{box-shadow:0 0 0 7px rgba(255,211,77,0)}100%{box-shadow:0 0 0 0 rgba(255,211,77,0)}}
+.subnav a.has-hint{border-color:#e8b923}
+.subnav a.has-hint.on{border-color:var(--navy)}
+.hint-legend{font-size:12.5px;color:#dfe7f5;margin-top:4px}
+
+.nb-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nb-card{background:#fff;border:1px solid var(--line);border-top:6px solid var(--c);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px}
+.nb-hd{display:flex;gap:12px;align-items:center}
+.nb-ic{font-size:30px;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 12%,#fff);flex:none}
+.nb-tag{font-size:12px;color:var(--muted)}
+.nb-hd h4{margin:0;font-size:19px;color:var(--c);line-height:1.35}
+.nb-use,.nb-when{margin:0;font-size:14.5px}
+.nb-when{background:#fff8e1;border-radius:8px;padding:8px 10px}
+.nb-modes{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.nb-modes b{color:var(--navy)}
+.nb-modes span{background:var(--green-soft);color:var(--green);border-radius:999px;padding:2px 10px;font-weight:700}
+.nb-q{display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.nb-q b{color:var(--navy);font-size:14px}
+.nb-qb{border:1px solid var(--line);background:#f6f8fc;border-radius:8px;padding:7px 10px;text-align:left;font-size:13.5px;color:var(--navy-ink);display:flex;justify-content:space-between;gap:8px}
+.nb-qb span{color:var(--green);font-weight:700;white-space:nowrap}
+.nb-go{margin-top:auto;text-align:center;text-decoration:none;background:var(--c)}
+@media (max-width:800px){.nb-grid{grid-template-columns:1fr}}
+
+.helper-pick{margin:6px 0 0;padding-left:22px;color:var(--navy-ink)}
+.helper-pick li{padding:3px 0}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:20px;border-top:1px solid var(--line)}
+
+@media (max-width:900px){
+  .five{grid-template-columns:repeat(2,1fr)}
+  .types{grid-template-columns:1fr 1fr}
+  .map{grid-template-columns:1fr 1fr}
+  .flow-intro,.ai-hero,.venn-wrap,.k12-ctrl{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .five,.types,.map{grid-template-columns:1fr}
+  .flip{height:220px}
+  .fw-row{grid-template-columns:1fr}
+  .ind-face .hd{grid-template-columns:1fr}
+  .head-meta{align-items:flex-start}
+  main{padding:20px 14px 90px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-row">
+    <div class="title-block">
+      <h1>SEL 融入數學領域</h1>
+      <p>SEL 社會情緒學習：框架、指標與課程融入｜📅 2026 年 11 月 13 日</p>
+      <div class="hint-legend"><span class="hint" style="margin:0 4px 0 0;width:18px;height:18px;font-size:11px">🤖</span>標有這個圖示的分頁，裡面有 AI 小幫手</div>
+    </div>
+    <div class="head-meta">
+      <div class="copyright">© 臺師大教創中x優履團隊研發設計2026，使用請引註</div>
+      <div class="lecturer">講師：<b>張雨霖</b></div>
+      <a class="slides-link" href="https://docs.google.com/presentation/d/1tCff5zwAcM9fCN6AnTTw87xTmpXDuEZwnabwf0Xngws/edit?slide=id.ai1113_c2#slide=id.ai1113_c2" target="_blank" rel="noopener">📑 原始簡報 ↗</a>
+    </div>
+  </div>
+  <nav id="tabs" role="tablist"></nav>
+</header>
+
+<main>
+<div class="subnav" id="subnav"></div>
+
+<!-- ============ 1 流程 ============ -->
+<section class="page" id="p-flow">
+  <div class="page-head">
+    <div class="kicker">STEP 01｜工作坊流程說明</div>
+    <h2>今天的 SEL 探索路線</h2>
+    <p>五大主題，從「認識 SEL 是什麼」一路走到「把 SEL 設計進數學課」。點主題卡片或下方小標籤可直接前往；完成後按「完成打卡」點亮徽章。</p>
+  </div>
+
+  <div class="flow-intro">
+    <div class="card">
+      <div class="copy-row"><b style="color:var(--navy)">今天你會帶走什麼</b><a class="btn" style="text-decoration:none" href="https://docs.google.com/presentation/d/1tCff5zwAcM9fCN6AnTTw87xTmpXDuEZwnabwf0Xngws/edit?slide=id.ai1113_c2#slide=id.ai1113_c2" target="_blank" rel="noopener">📑 開啟原始簡報 ↗</a></div>
+      <ul style="margin:6px 0 0;padding-left:20px">
+        <li>看懂 CASEL、UNESCO EMC²、SEE Learning、SEED 六向度等 SEL 架構的異同</li>
+        <li>查得到各年級學生的 SEL 發展目標（幼教到 12 年級）</li>
+        <li>掌握結合 SEL 與議題教學的 14 條教學指標</li>
+        <li>判斷 SEL 融入課程的類型，並用 SEL-PACK 設計自己的課</li>
+        <li>用 SAFE 原則檢核教學設計，並從自我決定論思考 AI 時代的學習動機</li>
+        <li>帶走降低數學焦慮、增進學習動機的實證做法，並用 PERMA 設計幸福數學課</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="progress"><b style="white-space:nowrap">闖關進度</b><div class="bar"><i id="pbar"></i></div><b id="ptext">0 / 5</b></div>
+  <div class="map" id="map"></div>
+</section>
+
+<!-- ============ 2 AI ============ -->
+<section class="page" id="p-ai">
+  <div class="page-head">
+    <div class="kicker">STEP 02｜AI 小幫手連結區</div>
+    <h2>AI 小幫手（共 3 個）</h2>
+    <p>這裡共有 <b>3 個小幫手</b>，依你想做的事挑一個：</p>
+    <ol class="helper-pick">
+      <li><b>⭐ PERMA 數學課微調</b>（最上方）：已有一份數學課設計，想<b>小幅調整</b>，讓課多一點 PERMA 幸福元素。</li>
+      <li><b>🧭 各領域融入 SEL 課程設計助手</b>（左）：想<b>分析、設計自己的課</b>的 SEL 融入點。</li>
+      <li><b>📚 SEL 課程發展與教學設計</b>（右）：想<b>找理論、活動與班級經營點子</b>。</li>
+    </ol>
+  </div>
+  <a class="star-helper" href="#tune">
+    <span class="sh-badge">⭐ 重要小幫手</span>
+    <span class="sh-ic">🎼</span>
+    <span class="sh-txt"><b>PERMA 數學課微調</b><small>用 PERMA 五元素小幅微調你的數學課，讓它更幸福</small></span>
+    <span class="sh-go">開始微調 →</span>
+  </a>
+  <div class="nb-grid">
+    <div class="nb-card" style="--c:#3c7a2e">
+      <div class="nb-hd"><span class="nb-ic">🧭</span><div><div class="nb-tag">Gemini Notebook｜5 個來源</div><h4>各領域融入 SEL 課程設計助手</h4></div></div>
+      <p class="nb-use"><b>可以做什麼：</b>以 SEED 社會情緒教育六向度為主要依據，協助你檢視<b>教學目標、學生任務與活動線索</b>，找出 SEL 可以融入的落點；需要時再參考世界銀行分齡指標與國教院議題教學指標。</p>
+      <p class="nb-when"><b>👉 適合這時候用：</b>手上已經有一份教案或單元，想<b>分析或設計 SEL 融入點</b>。</p>
+      <div class="nb-modes"><b>三種提問模式</b><span>嚴謹版：SEED 聚焦</span><span>寬版：跨來源探索</span><span>探究流程：領綱 → 原理 → SEL 落點</span></div>
+      <div class="nb-q"><b>可以這樣問</b><button class="nb-qb" data-q="如何使用SEED六向度架構來深度分析我的課程設計？">💬 如何使用SEED六向度架構來深度分析我的課程設計？<span>複製</span></button><button class="nb-qb" data-q="跨來源探索中，世界銀行與國教院指標如何輔助教學？">💬 跨來源探索中，世界銀行與國教院指標如何輔助教學？<span>複製</span></button><button class="nb-qb" data-q="如何透過領綱與SEL原理的結合來規劃課堂活動？">💬 如何透過領綱與SEL原理的結合來規劃課堂活動？<span>複製</span></button></div>
+      <a class="btn nb-go" href="https://notebook.google.com/notebook/35d4f23b-e3ec-4e36-a553-3dc9d165ca4e" target="_blank" rel="noopener">開啟「課程設計助手」 ↗</a>
+    </div>
+    <div class="nb-card" style="--c:#1f3f73">
+      <div class="nb-hd"><span class="nb-ic">📚</span><div><div class="nb-tag">Gemini Notebook｜9 個來源</div><h4>SEL 課程發展與教學設計</h4></div></div>
+      <p class="nb-use"><b>可以做什麼：</b>整理 SEL 的理論基礎與實踐：<b>各年段發展特徵、五大核心能力、班級經營策略、體驗式教學活動</b>，以及家校合作與跨領域整合。</p>
+      <p class="nb-when"><b>👉 適合這時候用：</b>想找<b>活動點子、班級經營做法</b>，或了解不同年段學生的 SEL 發展特徵。</p>
+      
+      <div class="nb-q"><b>可以這樣問</b><button class="nb-qb" data-q="如何將社會情緒學習（SEL）融入各學科的教學中？">💬 如何將社會情緒學習（SEL）融入各學科的教學中？<span>複製</span></button><button class="nb-qb" data-q="幼兒園到高中各階段的SEL發展特徵與教學目標為何？">💬 幼兒園到高中各階段的SEL發展特徵與教學目標為何？<span>複製</span></button><button class="nb-qb" data-q="有哪些具體的班級經營與情緒調節活動可以實踐？">💬 有哪些具體的班級經營與情緒調節活動可以實踐？<span>複製</span></button></div>
+      <a class="btn nb-go" href="https://notebook.google.com/notebook/36f505fd-f2d4-40cf-ad77-c9b422c33fbd" target="_blank" rel="noopener">開啟「課程發展與教學設計」 ↗</a>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b style="color:var(--navy)">使用小提醒</b>
+    <ol style="margin:6px 0 0;padding-left:20px">
+      <li>先說明你的<b>任教年級、領域、單元名稱</b>。</li>
+      <li>指定要對照的架構（例如 SEED 六向度、CASEL 五大核心或 World Bank 發展目標）。</li>
+      <li>AI 給的建議請回到本網站的原始資料核對，再放進教案。</li>
+      <li>兩個筆記本都會在新分頁開啟，需要登入 Google 帳號。</li>
+    </ol>
+  </div>
+  <h3>建議提問（一鍵複製）</h3>
+  <div class="grid g2" id="prompts"></div>
+</section>
+
+<!-- ============ 3 小組 ============ -->
+<section class="page" id="p-groups">
+  <div class="page-head">
+    <div class="kicker">STEP 03｜小組實作區</div>
+    <h2>小組共備：設計一段 SEL 融入的課</h2>
+    <p>依下列步驟分組完成實作。右下角「🧰 工具箱」有計時器與抽籤。</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <b style="color:var(--navy)">實作任務</b>
+      <ol class="steps" style="margin-top:6px">
+        <li>選一個你下學期會教的單元，寫下學科學習目標。</li>
+        <li>到「目標與指標 › K-12 發展目標」查學生年級對應的 SEL 目標，挑 1–2 項。</li>
+        <li>用「SEL 課程設計 › 融入課程四型」決定融入方式（延伸或連結）。</li>
+        <li>用「SEL 課程設計 › SEL-PACK」的範本寫出一段教學活動，並說明 SEL 如何幫助學科學習。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 CASEL ============ -->
+<section class="page" id="p-casel">
+  <div class="page-head">
+    <div class="kicker">節點 ①｜SEL 核心五力</div>
+    <h2>社會情緒學習（Social and Emotional Learning, SEL）</h2>
+    <p>CASEL 把 SEL 整理成五大核心能力。點卡片翻面，看看每個核心要培養哪些能力。</p>
+  </div>
+  <div class="five" id="five"></div>
+  <h3>五力怎麼分？</h3>
+  <div class="grid g3">
+    <div class="card" style="border-left:6px solid var(--self)"><b>對自己</b><br>自我覺察、自主管理</div>
+    <div class="card" style="border-left:6px solid var(--other)"><b>對他人</b><br>社會覺察、人際技巧</div>
+    <div class="card" style="border-left:6px solid var(--group)"><b>做選擇</b><br>負責任的決定（個人、家庭與社會福祉）</div>
+  </div>
+  <p class="src">來源：工作坊簡報「社會情緒學習（SEL）核心與培力」；CASEL 架構。</p>
+</section>
+
+<!-- ============ 5 國際架構 ============ -->
+<section class="page" id="p-frameworks">
+  <div class="page-head">
+    <div class="kicker">節點 ②｜國際架構對照</div>
+    <h2>不同的 SEL 架構，看見同一件事的不同面向</h2>
+    <p>除了 CASEL，UNESCO、Emory 大學與臺灣 SEED 研究中心也各自提出架構。切換看各架構內容，最後用對照矩陣找出共通處。</p>
+  </div>
+  <div class="subtabs" id="fwtabs">
+    <button class="on" data-s="emc">UNESCO MGIEP｜EMC²</button>
+    <button data-s="see">Emory｜SEE Learning</button>
+    <button data-s="seed">SEED｜社會情緒教育六向度</button>
+    <button data-s="mx">🔀 對照矩陣</button>
+  </div>
+
+  <div class="sub on" id="s-emc">
+    <div class="fw" id="emc"></div>
+    <p class="src">來源：UNESCO MGIEP, LIBRE／EMC² 架構｜中文摘要。</p>
+  </div>
+
+  <div class="sub" id="s-see">
+    <div class="see-group">個人與社會領域</div>
+    <div class="fw" id="see1"></div>
+    <div class="see-group">系統領域</div>
+    <div class="fw" id="see2"></div>
+    <p class="src">來源：Emory University (2019), <i>The SEE Learning Companion</i>, pp. 26–27｜中文摘要。</p>
+  </div>
+
+  <div class="sub" id="s-seed">
+    <p style="margin-top:0">「社會情緒教育與發展研究中心」以<b>自我、他人、群體</b>三個主軸，展開六個核心概念。點開次概念看內涵。</p>
+    <div id="seed"></div>
+    <p class="src">來源：《社會情緒學習導論》第 2 章，表 2.3 社會情緒教育與發展研究中心：社會情緒教育與發展六向度（pp. 78–79）。</p>
+  </div>
+
+  <div class="sub" id="s-mx">
+    <p style="margin-top:0"><span class="tag">整理對照</span>以 CASEL 五大核心為主軸，把其他架構中內涵相近的項目放在同一列。這是協助理解的對照，不是各架構的官方對應。</p>
+    <div class="tbl-wrap"><table class="matrix">
+      <thead><tr><th>CASEL</th><th>UNESCO EMC²</th><th>SEE Learning</th><th>SEED 六向度</th></tr></thead>
+      <tbody>
+        <tr><td>自我覺察</td><td>正念</td><td>注意與自我覺察</td><td>自我覺察（情緒覺察、探索自我、自我認同）</td></tr>
+        <tr><td>自主管理</td><td>正念</td><td>自我調節、自我慈悲</td><td>自我管理（情緒調節、動機管理、目標管理）</td></tr>
+        <tr><td>社會覺察</td><td>同理、慈悲</td><td>人際覺察、對他人的慈悲、認識共同人性</td><td>人際覺察（同理欣賞、多元觀點、辨識危機）</td></tr>
+        <tr><td>人際技巧</td><td>慈悲（助人行動）</td><td>人際技巧</td><td>人際技巧（友善溝通、團隊合作、人我界線）</td></tr>
+        <tr><td>負責任的決定</td><td>批判探究</td><td>理解相互依存、社區與全球參與</td><td>責任思辨、決定承擔</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============ 6 K12 ============ -->
+<section class="page" id="p-k12">
+  <div class="page-head">
+    <div class="kicker">節點 ③｜K-12 發展目標地圖</div>
+    <h2>學生在每個年級，可以發展出哪些 SEL 能力？</h2>
+    <p>World Bank 整合型 K-12 SEL 課綱：3 範疇 → 5 核心 → 15 次核心，從幼教到 12 年級逐年列出發展目標。拖曳年級，或切換成「看一個次核心的 13 年進程」。</p>
+  </div>
+  <div class="mode-toggle">
+    <button class="btn" id="m-grade">📅 依年級看</button>
+    <button class="btn ghost" id="m-line">📈 依次核心看進程</button>
+  </div>
+  <div class="k12-ctrl card">
+    <div id="ctrl-grade">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><b>年級</b><span class="grade-now" id="gnow"></span></div>
+      <input type="range" min="0" max="12" value="7" id="grange">
+      <div class="grade-scale"><span>幼教</span><span>國小</span><span>國中</span><span>高中</span></div>
+    </div>
+    <div id="ctrl-line" style="display:none">
+      <b>選擇次核心</b>
+      <select id="scsel" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1.5px solid var(--line);font-family:inherit;font-size:15px"></select>
+    </div>
+    <div>
+      <b>範疇篩選</b>
+      <div class="chips" id="kchips" style="margin-top:6px"></div>
+    </div>
+  </div>
+  <div class="k12-grid" id="kout"></div>
+  <p class="src">來源：World Bank 整合型 K-12 課綱（臺師大陳學志老師 SEL 研究團隊譯整）：幼教與國小、國中（7–9 年級）、高中（10–12 年級）三份 SEL 指標表；幼教能力指標表。原文照錄。</p>
+</section>
+
+<!-- ============ 7 指標 ============ -->
+<section class="page" id="p-indicators">
+  <div class="page-head">
+    <div class="kicker">節點 ④｜SEL × 議題教學</div>
+    <h2>結合社會情緒學習與議題教學的 14 條教學指標</h2>
+    <p>這些指標<b>不是評鑑指標</b>，而是把 SEL、議題教學與十二年國教課綱的精神，從抽象理念轉為具體教學實務的參考，可作為教師共備與增能的對話起點。</p>
+  </div>
+  <h3>議題教學 8 原則（融入每條指標的文字中）</h3>
+  <div class="principles">
+    <span>自發</span><span>互動</span><span>共好</span><span>跨領域／科目統整</span><span>知識、情意與技能的整合</span><span>學習情境強調脈絡化</span><span>兼重學習歷程、策略與方法</span><span>整全的活用表現</span>
+  </div>
+  <h3>CASEL 五面向 × 教學指標</h3>
+  <div class="row" style="justify-content:flex-start;margin-bottom:10px">
+    <button class="btn ghost" onclick="toggleInd(true)">全部展開</button>
+    <button class="btn ghost" onclick="toggleInd(false)">全部收合</button>
+  </div>
+  <div id="ind"></div>
+  <p class="src">來源：表 4 結合社會情緒學習與議題教學之教學指標定稿版（pp. 34–37）。</p>
+</section>
+
+<!-- ============ 8 融入 ============ -->
+<section class="page" id="p-integration">
+  <div class="page-head">
+    <div class="kicker">節點 ⑤｜SEL 融入課程四型</div>
+    <h2>SEL 議題融入課程的類型</h2>
+    <p>依「主體是學科還是 SEL」以及「實施範圍」，SEL 融入課程可分為四種類型；融入式又可用 Banks 多元文化課程改革四取向來細分。</p>
+  </div>
+  <div class="types">
+    <div class="type pink"><h4>融入式－連結</h4><small>（SEL 應用）</small>
+      <p style="font-size:14.5px;margin:6px 0">主體為原領域內容，其中部分內容跟 SEL 內涵重疊（<span class="key">SEL 內涵有助於學習原領域內容</span>）。</p>
+      <ul><li><b>轉化</b>：一題多解畫廊，聽懂、比較別人的解法才算完成任務</li><li><b>社會行動</b>：統計班上睡眠時間，向學校提出建議</li></ul></div>
+    <div class="type"><h4>融入式－延伸</h4><small>&nbsp;</small>
+      <p style="font-size:14.5px;margin:6px 0">主體為原領域內容，有部分時間延伸教學 SEL 內容（<span class="key">SEL 內涵不一定與原領域直接相關</span>）。</p>
+      <ul><li><b>貢獻</b>：介紹數學家走過失敗的經歷</li><li><b>添加</b>：課前情緒 check-in、課後反思日誌</li></ul></div>
+    <div class="type pink"><h4>主題式</h4><small>&nbsp;</small>
+      <p style="font-size:14.5px;margin:6px 0">主體為 SEL 內容，以彈性學習課程或領域課程中單節或多節課單元實施（<span class="key">並非整學期都實施</span>）。</p>
+      <ul><li>專輔老師的彈性學習課程（班級輔導）某次以 SEL 為主題</li><li>國中綜合活動輔導課程</li><li>國中健體領域－健康教育課程</li></ul></div>
+    <div class="type"><h4>特色課程</h4><small>&nbsp;</small>
+      <p style="font-size:14.5px;margin:6px 0">主體為 SEL 內容，以<span class="key">學期或跨學期、跨領域方式實施</span>。</p>
+      <ul><li>臺北市社會情緒學習校本特色課程</li></ul></div>
+  </div>
+
+  <h3>延伸與連結：用 Banks 四取向對照（以數學為例）</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>融入方式</th><th>Banks 取向</th><th>說明</th><th>以數學為例</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2"><b>延伸</b><br><small>在原本要教的數學之外，另外花時間談</small></td><td><b>貢獻</b></td><td>點綴與 SEL 有關的人物或故事</td><td>介紹一位數學家走過失敗的經歷</td></tr>
+      <tr><td><b>添加</b></td><td>另外加入 SEL 活動，數學內容不變</td><td>課前情緒 check-in、課後反思日誌</td></tr>
+      <tr><td rowspan="2"><b>連結</b><br><small>數學內容本身就和 SEL 交織</small></td><td><b>轉化</b></td><td>重新設計數學任務，SEL 成為完成任務的一部分</td><td>一題多解畫廊：要聽懂、比較別人的解法，任務才算完成</td></tr>
+      <tr><td><b>社會行動</b></td><td>用數學分析真實問題，並提出行動</td><td>統計班上睡眠或手機使用，整理成建議交給學校</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">資料來源：Banks (2010) 多元文化課程改革四取向；工作坊簡報「SEL 議題融入課程的類型」。</p>
+
+  <h3>小測驗：這是哪一種融入？</h3>
+  <div class="quiz" id="quiz"></div>
+</section>
+
+<!-- ============ 9 SEL-PACK ============ -->
+<section class="page" id="p-selpack">
+  <div class="page-head">
+    <div class="kicker">節點 ⑥｜SEL-PACK</div>
+    <h2>SEL-PACK = SEL Pedagogical &amp; Content Knowledge</h2>
+    <p>SEL 知識（SEL-K）、教學知識（PK）與學科內容知識（CK）三者交集，就是 SEL-PACK：讓學生在學習本領域的過程中，同時獲得 SEL 的經驗。點圖中各區塊看說明。</p>
+  </div>
+  <div class="venn-wrap card">
+    <div class="venn">
+      <svg viewBox="0 0 500 440" role="img" aria-label="SEL-PACK 文氏圖">
+        <circle class="zone" data-z="SEL-K" cx="250" cy="150" r="125" fill="#e9a8b4" fill-opacity=".55"/>
+        <circle class="zone" data-z="PK" cx="180" cy="285" r="125" fill="#f2c96b" fill-opacity=".55"/>
+        <circle class="zone" data-z="CK" cx="320" cy="285" r="125" fill="#8fb3e6" fill-opacity=".55"/>
+        <text x="250" y="95" text-anchor="middle" font-size="13" fill="#13284a">SEL Knowledge</text>
+        <text x="250" y="122" text-anchor="middle" font-size="24" font-weight="900" fill="#13284a">SEL-K</text>
+        <text x="130" y="320" text-anchor="middle" font-size="24" font-weight="900" fill="#13284a">PK</text>
+        <text x="370" y="320" text-anchor="middle" font-size="24" font-weight="900" fill="#13284a">CK</text>
+        <text x="185" y="225" text-anchor="middle" font-size="17" font-weight="900" fill="#13284a">SEL-PK</text>
+        <text x="315" y="225" text-anchor="middle" font-size="17" font-weight="900" fill="#13284a">SEL-CK</text>
+        <text x="250" y="335" text-anchor="middle" font-size="17" font-weight="900" fill="#13284a">PCK</text>
+        <text x="250" y="262" text-anchor="middle" font-size="18" font-weight="900" fill="#1f3f73">SEL-PACK</text>
+        <circle class="zone" data-z="SEL-PK" cx="190" cy="220" r="26" fill="transparent"/>
+        <circle class="zone" data-z="SEL-CK" cx="310" cy="220" r="26" fill="transparent"/>
+        <circle class="zone" data-z="PCK" cx="250" cy="330" r="24" fill="transparent"/>
+        <circle class="zone" data-z="SEL-PACK" cx="250" cy="257" r="30" fill="transparent"/>
+      </svg>
+    </div>
+    <div class="venn-info" id="vinfo"></div>
+  </div>
+
+  <h3>以數學為例：三種 SEL 融入知識</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:120px">SEL 融入</th><th style="width:30%">說明</th><th>例如</th></tr></thead>
+    <tbody>
+      <tr><td><b>SEL-CK</b></td><td>在我們領域當中與 SEL 直接有關或可連結的內涵</td><td>探討「同一組數據為什麼能畫出讓人印象完全不同的統計圖」，連結多元觀點與負責任的判斷。</td></tr>
+      <tr><td><b>SEL-PK</b></td><td>一般性教學過程中，可促進 SEL 的班級經營</td><td>教師先示範：「這題我第一次也算錯。卡住時我會先停下來，說出卡在哪一步，再換個方法試試。」建立可以說「我不會」、可以答錯、也能修正算法的課堂氣氛。</td></tr>
+      <tr><td><b>SEL-PACK</b></td><td>如何在我們領域的教學當中，讓學生在學習本領域的過程中也同時獲得 SEL 的經驗</td><td>以「同一道應用題的三種解法」為案例。學生先覺察自己看到不同解法時的直覺反應（「我的才對」「看不懂好煩」），再檢驗每種解法的推理；討論時先重述別人的解題思路，再比較各解法的優點與適用時機，最後反思自己對解題的看法如何改變。</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>SEL-PACK 課程設計範本</h3>
+  <div class="card">
+    <div class="copy-row"><span class="tag">整理範本</span><button class="btn green" onclick="copyText(document.getElementById('tpl').innerText,this)">📋 複製範本</button></div>
+    <pre class="tpl" id="tpl">【單元名稱】
+【任教年級／領域】
+【學科學習目標（CK）】
+【對應的 SEL 發展目標】（從「K-12 發展目標地圖」挑 1–2 項，註明次核心）
+【融入類型】□延伸：貢獻／添加　□連結：轉化／社會行動
+【SEL-CK】本單元哪些內容本身就和 SEL 有關？
+【SEL-PK】哪些班級經營做法能營造安全、支持的學習氣氛？
+【SEL-PACK 活動】學生在完成哪個學科任務的過程中，同時經驗到 SEL？
+　1. 覺察：
+　2. 檢驗／探究：
+　3. 對話／合作：
+　4. 反思：
+【可對照的教學指標】（從「SEL × 議題教學 14 條指標」挑選）</pre>
+  </div>
+  <p class="src">來源：工作坊簡報「SEL-PACK = SEL Pedagogical &amp; Content Knowledge」。範本為依簡報內容整理的設計提示。</p>
+</section>
+
+<!-- ============ 10 SAFE ============ -->
+<section class="page" id="p-safe">
+  <div class="page-head">
+    <div class="kicker">節點 ⑦｜SAFE 教學原則</div>
+    <h2>SAFE 原則：有效的 SEL 教學設計</h2>
+    <p>設計 SEL 課程或活動時，可以用 SAFE 四個原則檢視：順序是否合理、學生是否主動參與、是否有專屬時間、目標是否明確。</p>
+  </div>
+  <div class="safe">
+    <div class="s"><div class="L">S<small>equential</small></div><div class="zh">循序漸進</div><p>課程設計需具備邏輯先後順序，將複雜的社交情緒技能拆解成細小的步驟。透過分階段的引導，確保學生的能力能隨時間穩步鞏固。</p></div>
+    <div class="s"><div class="L">A<small>ctive</small></div><div class="zh">主動參與</div><p>強調主動的學習方式。教師透過角色扮演、小組討論或情境模擬，讓學生在互動中練習技能，而非僅是單向聽講，以達成深度內化。</p></div>
+    <div class="s"><div class="L">F<small>ocused</small></div><div class="zh">聚焦重點</div><p>在教學進度中撥出明確且充足的專屬時間來發展社交與情緒能力。專注於特定的 SEL 知能。</p></div>
+    <div class="s"><div class="L">E<small>xplicit</small></div><div class="zh">目標清晰</div><p>清楚地定義要學習的特定技能（如：同理心、衝突解決）。明確的教學目標能幫助學生具體培養 SEL 核心素養，而非籠統的概念。</p></div>
+  </div>
+  <h3>SAFE 自我檢核：我的教學設計</h3>
+  <div class="card">
+    <div class="copy-row"><span><span class="tag">整理檢核</span>依 SAFE 四原則改寫成檢核問題，勾選後記在你的瀏覽器</span><b id="safe-score">0 / 4</b></div>
+    <div id="safe-chk"></div>
+  </div>
+  <p class="src">來源：工作坊簡報「SAFE 原則」。</p>
+</section>
+
+<!-- ============ 11 Motivation ============ -->
+<section class="page" id="p-motivation">
+  <div class="page-head">
+    <div class="kicker">節點 ⑧｜學習動機與 AI</div>
+    <h2>動機，是學習設計的前提</h2>
+    <p>從自我決定論的三個基本心理需求與動機內化，再看可汗學院在 AI 家教上學到的教訓：AI 時代的教學設計，關鍵是讓學生有理由參與思考。</p>
+  </div>
+
+  <h3>自我決定論：三個基本心理需求</h3>
+  <div class="sdt">
+    <div class="n"><h4>自主性</h4><div class="en">Autonomy</div><div class="core">覺得行動出於<em>自己的選擇與認同</em>，不是被控制</div><div class="yn"><div class="y">✅ 被滿足時：願意主動投入</div><div class="x">⚠️ 被剝奪時：只想應付或反抗</div></div><div class="mx">🧮 <b>數學課的例子</b><br>練習時讓學生從三組難度不同的題目中自選一組；先說明「這個單元能幫你做什麼」，而不只說「考試會考」。</div></div>
+    <div class="n"><h4>勝任感</h4><div class="en">Competence</div><div class="core">覺得<em>自己做得到</em>，看得見自己在進步</div><div class="yn"><div class="y">✅ 被滿足時：願意接受挑戰</div><div class="x">⚠️ 被剝奪時：逃避、放棄</div></div><div class="mx">🧮 <b>數學課的例子</b><br>把難題切成小步驟，每完成一步就打勾；回饋具體指出「這一步你做對了」。</div></div>
+    <div class="n"><h4>歸屬感</h4><div class="en">Relatedness</div><div class="core">覺得<em>被老師和同學接納、在乎</em></div><div class="yn"><div class="y">✅ 被滿足時：願意接受團體的價值</div><div class="x">⚠️ 被剝奪時：疏離、退縮</div></div><div class="mx">🧮 <b>數學課的例子</b><br>分組時每人都有角色；有人答錯時，先請同學說「他對的地方是……」。</div></div>
+  </div>
+  <p class="src">資料來源：Ryan &amp; Deci (2000)。</p>
+
+  <h3>動機內化：從「被逼」到「我認同」</h3>
+  <div class="card">
+    <p style="margin:0 0 10px">點選各類型，看意涵和數學課裡學生會說的話。<b>越往右越自主</b>：外在的要求，逐漸變成自己認同的價值。</p>
+    <div class="cont" id="cont"></div>
+    <div class="cont-arrow"><span>← 外在控制</span><span>自主 →</span></div>
+    <div class="cont-info" id="cont-info"></div>
+    <div class="push">👉 老師推一把：<b>說明理由、承認學生的感受、給有限的選擇</b></div>
+  </div>
+  <p class="src">資料來源：Ryan &amp; Deci (2000)；Reeve &amp; Cheon (2021)。</p>
+
+  <h3>可汗學院的教訓 1｜學習動機，不能靠 AI 設計硬補</h3>
+  <p style="margin:0 0 12px;color:var(--muted)">Khanmigo 想避免「直接給答案」，改用蘇格拉底式提示；但當學生只想用最低成本完成任務，互動很快變成摩擦。</p>
+  <div class="flowk">
+    <div class="b" style="background:linear-gradient(135deg,#0f6e6a,#1a8f88)"><h4>❓ 設計初衷</h4>不直接給答案，改用提問引導學生思考。</div>
+    <div class="ar">→</div>
+    <div class="b" style="background:#fff;color:var(--navy-ink);border:1px solid var(--line)"><h4>💬 學生反應</h4>「IDK」「Bro IDK」「ok」成為最低成本策略。</div>
+    <div class="ar">→</div>
+    <div class="b" style="background:linear-gradient(135deg,#8a5a1c,#c9892f)"><h4>❗ 設計矛盾</h4>摩擦增加，不等於動機增加；不給答案，也不等於正在學習。</div>
+  </div>
+  <div class="oneline">一句話：動機是學習設計的前提，不是 AI 對話流程的附加功能。</div>
+
+  <h3>可汗學院的教訓 2｜真正要設計的，是人如何參與思考</h3>
+  <p style="margin:0 0 12px;color:var(--muted)">AI 教學不是把答案藏起來，而是讓學生知道：為什麼這個問題值得自己先想，AI 又應該在什麼位置進場。</p>
+  <div class="vs">
+    <div class="col"><div class="hd" style="background:linear-gradient(90deg,#8e4a4f,#b45f5f)">頭痛醫頭的設計</div><ol>
+      <li><b>擔心 AI 給答案</b><br><small>把風險理解成「答案太容易出現」。</small></li>
+      <li><b>限制 AI 的回覆</b><br><small>用提問取代答案，期待學生自然投入。</small></li>
+      <li><b>學生選擇離開</b><br><small>當任務沒有意義，額外步驟只會變成阻力。</small></li></ol></div>
+    <div class="col"><div class="hd" style="background:linear-gradient(90deg,#0f6e6a,#1a8f88)">協作式 AI 的設計</div><ol>
+      <li><b>先建立任務意義</b><br><small>學生要知道：這件事為何值得我自己想。</small></li>
+      <li><b>安排人機分工</b><br><small>哪些由我先判斷，哪些讓 AI 生成、比較、回饋。</small></li>
+      <li><b>保留必要困難</b><br><small>不要把理解、選擇與修正全部外包出去。</small></li></ol></div>
+  </div>
+  <div class="oneline">AI 時代的教學設計：不是讓學生少犯規，而是讓學生有理由參與思考。</div>
+
+  <h3>連回 SEL：用三個需求檢視 AI 融入的課</h3>
+  <div class="grid g3">
+    <div class="card"><span class="tag">整理對照</span><br><b>自主性 ↔ 先建立任務意義</b><br><small>學生理解並認同「為何值得自己想」，動機才可能從外在調節走向認同調節。</small></div>
+    <div class="card"><span class="tag">整理對照</span><br><b>勝任感 ↔ 保留必要困難</b><br><small>學生自己完成理解、選擇與修正，才看得見自己的進步。</small></div>
+    <div class="card"><span class="tag">整理對照</span><br><b>歸屬感 ↔ 人機分工中的人際互動</b><br><small>判斷與討論留給同儕與師生之間，AI 擔任生成、比較與回饋的角色。</small></div>
+  </div>
+  <p class="src">資料來源：Why Sal Khan is rethinking how AI will change schools, Chalkbeat (2026-04-09)｜How Khan Academy Is Building a Better AI Tutor, Khan Academy Blog (2026-05-01)；工作坊簡報「可汗學院的教訓 1、2」。「連回 SEL」三張卡為依簡報內容整理的對照。</p>
+</section>
+
+<!-- ============ anxiety ============ -->
+<section class="page" id="p-anxiety">
+  <div class="page-head">
+    <div class="kicker">節點 ⑨｜降低數學焦慮</div>
+    <h2>降低抗拒：有研究支持的做法</h2>
+    <p>四個可以直接放進數學課的做法，標示使用時機與證據強度。點表格中的做法，可跳到下方的詳細步驟。</p>
+  </div>
+  <div class="tbl-wrap"><table class="strat-tbl" id="anx-tbl"><thead><tr><th>做法</th><th>什麼時候用</th><th>證據</th></tr></thead><tbody></tbody></table></div>
+  <div class="meta">📊 數學焦慮介入的後設分析（50 篇研究）：降低焦慮 g = −0.47、提升表現 g = 0.50；<b class="hl">12 歲以上的學生，降焦慮效果較大</b>。</div>
+  <p class="src">資料來源：Sammallahti et al. (2023)。證據等級：★★★ 中學樣本＋隨機＋大樣本；★★ 有隨機實驗但非國中數學或樣本小；★ 相關或問卷。</p>
+  <h3>四個做法怎麼進行</h3>
+  <div class="sc-grid" id="anx-cards"></div>
+</section>
+
+<!-- ============ boost ============ -->
+<section class="page" id="p-boost">
+  <div class="page-head">
+    <div class="kicker">節點 ⑩｜增進學習動機</div>
+    <h2>增進動機：有研究支持的做法</h2>
+    <p>五個做法各自對應自我決定論的需求或動機內化。點表格中的做法，可跳到下方的詳細步驟。</p>
+  </div>
+  <div class="tbl-wrap"><table class="strat-tbl" id="bst-tbl"><thead><tr><th>做法</th><th>對應自我決定論</th><th>證據</th></tr></thead><tbody></tbody></table></div>
+  <p class="src">證據等級：★★★ 中學樣本＋隨機＋大樣本或系統性回顧；★★ 效果小或看對象與環境；★ 縱貫相關研究。</p>
+  <h3>五個做法怎麼進行</h3>
+  <div class="sc-grid" id="bst-cards"></div>
+</section>
+
+<!-- ============ perma ============ -->
+<section class="page" id="p-perma">
+  <div class="page-head">
+    <div class="kicker">節點 ⑪｜PERMA 幸福數學課</div>
+    <h2>SEL 所學何事？正向心理學 PERMA</h2>
+    <p>Seligman 提出幸福的五個元素。先認識 PERMA，再想想它們怎麼放進數學教室，最後看本場設計的「幸福數學課」活動例與三個活動的進行方式。</p>
+  </div>
+  <a class="star-helper" href="#tune">
+    <span class="sh-badge">⭐ 重要小幫手</span>
+    <span class="sh-ic">🎼</span>
+    <span class="sh-txt"><b>PERMA 數學課微調</b><small>用 PERMA 五元素小幅微調你的數學課，讓它更幸福</small></span>
+    <span class="sh-go">開始微調 →</span>
+  </a>
+
+  <div class="perma">
+    <div class="p" style="background:linear-gradient(160deg,#f08a24,#e2522f)"><div class="L">P</div><h4>正面情緒</h4><small>Positive Emotions</small><p>感受喜悅、感恩、平靜等愉悅的主觀感受</p></div>
+    <div class="p" style="background:linear-gradient(160deg,#9cc63b,#5e9a2a)"><div class="L">E</div><h4>全心投入</h4><small>Engagement</small><p>全心投入於某項活動，達到忘我的心流（Flow）狀態</p></div>
+    <div class="p" style="background:linear-gradient(160deg,#3fa7e0,#2266b0)"><div class="L">R</div><h4>人際關係</h4><small>Relationships</small><p>擁有良好的人際互動，感受到愛、支持與連結</p></div>
+    <div class="p" style="background:linear-gradient(160deg,#e9559a,#b8327a)"><div class="L">M</div><h4>生命意義</h4><small>Meaning</small><p>感覺生活有價值，找到歸屬感，並為比自身更宏大的目標而努力</p></div>
+    <div class="p" style="background:linear-gradient(160deg,#f5b82e,#d98a12)"><div class="L">A</div><h4>成就感</h4><small>Accomplishment</small><p>達成自己設定的目標，無論大小，獲得成功感</p></div>
+  </div>
+
+  <h3>想一想：PERMA 怎麼放進數學教室的風景？</h3>
+  <div class="card ws">
+    <div class="copy-row"><span>先寫下你的想法（只存在你的瀏覽器），再對照下方的活動例。</span><button class="btn green" id="ws-copy">📋 複製我的想法</button></div>
+    <div class="tbl-wrap"><table><thead><tr><th>PERMA 元素</th><th>可以怎麼做？</th></tr></thead><tbody id="ws-body"></tbody></table></div>
+  </div>
+
+  <h3>PERMA：幸福數學課</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>元素</th><th>在數學課裡是什麼</th><th>怎麼增進</th><th>活動例</th></tr></thead>
+    <tbody>
+      <tr><td><b>P</b><br><small>正向情緒</small></td><td>好奇、驚喜、<em class="hl">「原來如此」</em>的頓悟；答錯也不會被笑的安心</td><td>用謎題、魔術引發好奇；和同學一起破解</td><td><a href="#" data-act="act-p">數學魔術揭秘 ↓</a></td></tr>
+      <tr><td><b>E</b><br><small>全心投入</small></td><td>專心到忘了時間；<em class="hl">挑戰剛好比能力高一點</em></td><td>自選難度起點，做完可以往上挑戰</td><td><a href="#" data-act="act-e">火柴棒三層挑戰 ↓</a></td></tr>
+      <tr><td><b>R</b><br><small>人際關係</small></td><td>和同學一起想、<em class="hl">被聽懂</em>、互相幫上忙</td><td>有結構的兩人合作，輪流說與寫</td><td><a href="#" data-act="act-r">我說你寫 ↓</a></td></tr>
+      <tr><td><b>M</b><br><small>意義</small></td><td>知道學這個<em class="hl">能幫到自己或別人</em></td><td>讓學生自己說出用途，寫給真實的人</td><td>寫給某人的數學信</td></tr>
+      <tr><td><b>A</b><br><small>成就感</small></td><td><em class="hl">看得見自己的進步</em>，完成有挑戰的任務</td><td>把進步畫出來，單元前後對照</td><td>我會了地圖</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">資料來源：Seligman (2011)；活動為本場設計。</p>
+
+  <h3>活動例怎麼進行</h3>
+  <div class="sc-grid">
+    <div class="sc" id="act-p"><div class="top"><h4>P 正向情緒｜數學魔術揭秘</h4><div class="m"><span>7 年級</span><span>代數符號</span><span>A-7-1 / a-IV-1</span><span>約 20 分鐘</span></div></div>
+      <div class="body"><div class="how"><span class="lbl">怎麼進行</span><ol>
+        <li>老師表演：「心裡想一個數，乘以 2，加 10，除以 2，再減掉原來的數——答案是 5。」</li>
+        <li>再試兩三位同學，都是 5，全班驚呼。</li>
+        <li>小組挑戰：「為什麼不管想什麼數都會得到 5？」用 x 寫出每一步、化簡。</li>
+        <li>每組設計自己的數學魔術（答案要固定），寫出代數證明。</li>
+        <li>組間互演：表演完，要用代數解釋給觀眾組聽。</li></ol></div>
+      <div class="side"><span class="lbl f">為什麼能增進</span><p><em class="hl">驚奇</em>引發好奇，<em class="hl">破解</em>帶來「原來如此」</p><p>互演時的笑聲與掌聲是同學給的正向情緒</p><span class="lbl w">小提醒</span><p>收尾問：「從『好神奇』到『原來如此』，中間你經過了什麼？」</p></div></div></div>
+    <div class="sc" id="act-e"><div class="top"><h4>E 全心投入｜火柴棒三層挑戰</h4><div class="m"><span>8 年級</span><span>數列與等差數列</span><span>N-8-3、N-8-4 / n-IV-7</span><span>約 30 分鐘</span></div></div>
+      <div class="body"><div class="how"><span class="lbl">怎麼進行</span><ol>
+        <li>用火柴棒排正方形：1 個要 4 根，2 個連排要 7 根，3 個要 10 根……</li>
+        <li>發三層挑戰卡，<em class="hl">學生自選從哪一層開始</em>：<br>🟢 第 5 個要幾根？（畫得出來就算）<br>🟡 第 20 個要幾根？不能全部畫，說明怎麼算。<br>🔴 第 n 個要幾根？用兩種看法說明（4 + 3(n−1)、3n + 1）。</li>
+        <li>完成一層就蓋章，可以往上挑戰。</li>
+        <li>請不同看法的同學上台：同一個圖形，不同的眼睛。</li></ol></div>
+      <div class="side"><span class="lbl f">為什麼能增進</span><p><em class="hl">挑戰和能力相當</em>才會專注投入</p><p>自選起點，每個人都找得到自己的那一層</p><span class="lbl w">小提醒</span><p>不是降低要求：🔴 層要有真正的挑戰</p><p>問：「你從哪一層開始？為什麼？」</p></div></div></div>
+    <div class="sc" id="act-r"><div class="top"><h4>R 人際關係｜我說你寫</h4><div class="m"><span>7 年級</span><span>一元一次方程式應用問題</span><span>A-7-3 / a-IV-2</span><span>約 25 分鐘</span></div></div>
+      <div class="body"><div class="how"><span class="lbl">怎麼進行</span><ol>
+        <li>兩人一組、<em class="hl">只有一枝筆</em>。</li>
+        <li>「說的人」只能說、不能碰筆；「寫的人」只寫夥伴說的內容，聽不懂就問「你的意思是……？」</li>
+        <li>每做完一題，兩人交換角色。</li>
+        <li>卡住時，寫的人可以說「換我想想看」，兩人一起討論。</li>
+        <li>結束時各寫一句：「夥伴哪一句話讓我懂了？」交給對方。</li></ol></div>
+      <div class="side"><span class="lbl f">為什麼能增進</span><p>說的人練習<em class="hl">說清楚</em>，寫的人練習<em class="hl">聽懂</em></p><p>最後的一句話讓夥伴知道自己幫上忙</p><span class="lbl w">小提醒</span><p>先由老師和一位學生示範一次</p><p>程度落差大時，先讓較弱的一方當「說的人」</p></div></div></div>
+  </div>
+  <p class="src">資料來源：工作坊簡報「PERMA 活動例」（本場設計）。</p>
+</section>
+
+<!-- ============ tune ============ -->
+<section class="page" id="p-tune">
+  <div class="page-head">
+    <div class="kicker">PERMA 幸福數學課</div>
+    <h2>🎼 PERMA 數學課微調</h2>
+    <p>國小、國中數學老師都適用。貼上你的一個教學活動、一段流程或一整節課，小幫手會在<b>不改數學內容與學習目標、不明顯增加上課時間</b>的前提下，從五個槓桿給「小幅調整」建議，讓這堂課多一點 PERMA。</p>
+  </div>
+  <div class="tune-wrap">
+    <div class="card tune-in">
+      <div class="lev"><b>五個調整槓桿</b>
+        <span>① 開場引導語</span><span>② 任務成功標準</span><span>③ 個人→小組（適合時）</span><span>④ 課堂經營與氣氛</span><span>⑤ 課後小反思</span></div>
+      <div class="frow">
+        <label>年級<select id="tg"><optgroup label="國小"><option>國小 1 年級</option><option>國小 2 年級</option><option>國小 3 年級</option><option>國小 4 年級</option><option>國小 5 年級</option><option>國小 6 年級</option></optgroup><optgroup label="國中"><option selected>國中 7 年級</option><option>國中 8 年級</option><option>國中 9 年級</option></optgroup><option>其他</option></select></label>
+        <label>單元<input id="tu" placeholder="例：一元一次方程式應用問題"></label>
+        <label>時間<input id="tt" placeholder="例：45 分鐘"></label>
+      </div>
+      <label class="full">你的課程設計（活動、流程或整節課）
+        <textarea id="td" rows="10" placeholder="例：&#10;1. 複習上一節（5 分）&#10;2. 老師講解例題 2 題（15 分）&#10;3. 學生個人寫課本練習 5 題（20 分）&#10;4. 對答案、收作業（5 分）"></textarea></label>
+      <div class="row" style="justify-content:flex-start">
+        <button class="btn ghost" id="tex">📝 填入範例</button>
+        <button class="btn green" id="tgo">🎼 開始微調</button>
+        <button class="btn ghost" id="tstop" style="display:none">停止</button>
+        <button class="btn ghost" id="tcopyp">📋 複製完整指令</button>
+      </div>
+      <p class="tnote" id="tnote">按「開始微調」後，網頁會請 Claude 依下方指令產生建議（第一次使用會詢問是否同意）。若此處無法使用 AI，可按「複製完整指令」，把指令和你的設計一起貼到任何 AI 工具。</p>
+      <details><summary>查看小幫手的完整指令</summary><pre class="tpl" id="tpre"></pre></details>
+    </div>
+    <div class="card tune-out">
+      <div class="copy-row"><b style="color:var(--navy)">微調建議</b><button class="btn ghost" id="tcopy" disabled>📋 複製建議</button></div>
+      <div id="tout" class="md"><div class="tempty">🎵 貼上課程設計，按「開始微調」，建議會出現在這裡。</div></div>
+    </div>
+  </div>
+  <p class="src">小幫手指令：本場工作坊提供；由 Claude 依指令產生建議，請以專業判斷取捨。</p>
+</section>
+
+</main>
+
+<footer>© 臺師大教創中x優履團隊研發設計2026，使用請引註｜資料來源見各分頁下方</footer>
+
+<!-- Toolbox -->
+<button class="fab" id="fab">🧰 工具箱</button>
+<div class="drawer" id="drawer">
+  <div class="tt">
+    <button class="on" data-t="t-timer">⏱ 計時</button>
+    <button data-t="t-draw">🎲 抽籤</button>
+    <button data-t="t-breath">🌬 呼吸</button>
+  </div>
+  <div class="tool on" id="t-timer">
+    <div class="timer-d" id="tdisp">05:00</div>
+    <div class="row"><button data-m="1">1 分</button><button data-m="3">3 分</button><button data-m="5">5 分</button><button data-m="10">10 分</button><button data-m="15">15 分</button></div>
+    <div class="row"><button class="btn" id="tgo">開始</button><button class="btn ghost" id="treset">重設</button></div>
+  </div>
+  <div class="tool" id="t-draw">
+    <p style="margin:0 0 6px">從 1 到 <input id="dmax" type="number" min="2" max="99" value="6" style="width:60px;padding:4px;border-radius:6px;border:1.5px solid var(--line)"> 抽一個</p>
+    <div class="draw-out" id="dout">?</div>
+    <button class="btn green" id="dgo">抽！</button>
+    <p style="font-size:12.5px;color:var(--muted);margin:8px 0 0">可抽組別或座號。勾選「不重複」後，抽過的號碼不會再出現。</p>
+    <label style="font-size:13.5px"><input type="checkbox" id="dnorep"> 不重複</label>
+  </div>
+  <div class="tool" id="t-breath">
+    <div class="breath" id="bcircle"></div>
+    <div class="breath-t" id="btext">準備好就按開始</div>
+    <button class="btn green" id="bgo">開始 1 分鐘呼吸</button>
+    <p style="font-size:12.5px;color:var(--muted);margin:8px 0 0">吸氣 4 秒、吐氣 4 秒。可作為課前情緒 check-in 的暖身。</p>
+  </div>
+</div>
+
+<script>
+/* ===== Tabs ===== */
+const GROUPS=[
+ {id:"home",t:"工作坊總覽",b:"🏠",d:"",hint:true,subs:[["flow","流程與路線"],["ai","AI 小幫手",1],["groups","小組實作"]]},
+ {id:"what",t:"認識 SEL",b:"🌱",d:"SEL 是什麼？從 CASEL 五力到國際架構",subs:[["casel","CASEL 五力"],["frameworks","國際架構對照"]]},
+ {id:"goals",t:"目標與指標",b:"🗺️",d:"學生各年級的 SEL 目標，以及結合議題教學的教學指標",subs:[["k12","K-12 發展目標"],["indicators","SEL×議題教學指標"]]},
+ {id:"design",t:"SEL 課程設計",b:"🧩",d:"怎麼把 SEL 融入數學課：類型、SEL-PACK 與 SAFE 原則",subs:[["integration","融入課程四型"],["selpack","SEL-PACK"],["safe","SAFE 原則"]]},
+ {id:"motive",t:"學習動機與焦慮",b:"🔥",d:"自我決定論、AI 時代的動機設計，以及有研究支持的做法",subs:[["motivation","自我決定論與 AI"],["anxiety","降低數學焦慮"],["boost","增進學習動機"]]},
+ {id:"happy",t:"PERMA 幸福數學課",b:"🌈",d:"正向心理學五元素與數學課活動例",hint:true,subs:[["perma","PERMA 與活動例"],["tune","PERMA 數學課微調",1]]}
+];
+const SUB2G={};GROUPS.forEach(g=>g.subs.forEach(x=>SUB2G[x[0]]=g));
+const tabs=document.getElementById('tabs');
+GROUPS.forEach((g,i)=>{
+  const b=document.createElement('button');b.setAttribute('role','tab');b.dataset.id=g.id;
+  b.innerHTML=`<span class="n">${i+1}</span>${g.t}${g.hint?'<span class="hint" title="這個分頁裡有 AI 小幫手">🤖</span>':''}`;if(g.hint)b.title='這個分頁裡有 AI 小幫手';b.onclick=()=>{location.hash=g.subs[0][0]};tabs.appendChild(b);
+});
+const subnav=document.getElementById('subnav');
+function route(){
+  const id=(location.hash||'#flow').slice(1);
+  const ok=SUB2G[id]?id:'flow';const g=SUB2G[ok];
+  document.querySelectorAll('section.page').forEach(s=>s.classList.toggle('on',s.id==='p-'+ok));
+  tabs.querySelectorAll('button').forEach(b=>{const on=b.dataset.id===g.id;b.setAttribute('aria-selected',on);if(on)tabs.scrollLeft=b.offsetLeft-tabs.clientWidth/2+b.offsetWidth/2});
+  subnav.innerHTML=(g.subs.length>1||g.hint)?g.subs.map((x,i)=>`<a href="#${x[0]}" class="${x[0]===ok?'on':''}${x[2]?' has-hint':''}"><span>${i+1}</span>${x[1]}${x[2]?'<i class="hint">🤖</i>':''}</a>`).join(''):'';
+  subnav.style.display=(g.subs.length>1||g.hint)?'':'none';
+  const k=document.querySelector('#p-'+ok+' .kicker');if(k)k.textContent=g.t+(g.subs.length>1?'｜'+g.subs.find(x=>x[0]===ok)[1]:'');
+  window.scrollTo(0,0);requestAnimationFrame(()=>window.scrollTo(0,0));
+}
+window.addEventListener('load',()=>setTimeout(()=>window.scrollTo(0,0),0));
+window.addEventListener('hashchange',route);
+
+/* ===== Storage helpers ===== */
+function sget(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sset(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function copyText(t,btn){
+  const done=()=>{const o=btn.textContent;btn.textContent='✅ 已複製';setTimeout(()=>btn.textContent=o,1500)};
+  try{navigator.clipboard.writeText(t).then(done,()=>fallbackCopy(t,done))}catch(e){fallbackCopy(t,done)}
+}
+function fallbackCopy(t,done){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove()}
+
+/* ===== Flow map ===== */
+const NODES=GROUPS.slice(1);
+let done=sget('sel-done2',[]);
+function drawMap(){
+  const m=document.getElementById('map');m.innerHTML='';
+  NODES.forEach((n,i)=>{
+    const d=done.includes(n.id);
+    const el=document.createElement('div');el.className='stop'+(d?' done':'');
+    el.innerHTML=`<div class="badge">${n.b}</div><div class="num">${i+1}</div><h4>${n.t}</h4><p>${n.d}</p>
+    <div class="subs">${n.subs.map(x=>`<a href="#${x[0]}">${x[2]?'🤖 ':''}${x[1]}</a>`).join('')}</div>
+    <div class="acts"><button class="btn" data-go="${n.subs[0][0]}">前往 →</button><button class="btn ${d?'green':'ghost'}" data-done="${n.id}">${d?'✔ 已完成':'完成打卡'}</button></div>`;
+    m.appendChild(el);
+  });
+  m.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>location.hash=b.dataset.go);
+  m.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{const id=b.dataset.done;done=done.includes(id)?done.filter(x=>x!==id):[...done,id];sset('sel-done2',done);drawMap()});
+  document.getElementById('pbar').style.width=(done.length/NODES.length*100)+'%';
+  document.getElementById('ptext').textContent=`${done.length} / ${NODES.length}`;
+}
+drawMap();
+
+/* ===== AI prompts ===== */
+const PROMPTS=[
+ ["對照框架","我任教國小五年級數學，單元是「分數的乘法」。請用 CASEL 五大核心，說明這個單元可以連結哪些 SEL 能力，並各舉一個課堂活動。"],
+ ["查發展目標","請列出 World Bank K-12 SEL 架構中，8 年級「社會覺察」核心下三個次核心的發展目標，並建議在國語課中可以怎麼落實。"],
+ ["判斷融入類型","我在課前做 3 分鐘情緒溫度計 check-in，課後寫反思日誌。這屬於 SEL 融入課程的哪一種類型？Banks 四取向中是哪一種？請說明理由。"],
+ ["改寫成 SEL-PACK","請把我的教學活動改寫成 SEL-PACK 版本：讓學生在完成學科任務的過程中，同時經歷覺察、對話與反思。我的原本活動是：（貼上活動）"]
+];
+document.getElementById('prompts').innerHTML=PROMPTS.map((p,i)=>`<div class="prompt"><div class="pt">💬 ${p[0]}</div><div class="pb" id="pp${i}">${p[1]}</div><button class="btn ghost" onclick="copyText(document.getElementById('pp${i}').innerText,this)">📋 複製</button></div>`).join('');
+
+
+/* ===== CASEL ===== */
+const CASEL=[
+ ["自我覺察","🪞",["辨識情緒","社會與文化認同","尋找優勢力","培養成長心態","自我效能","檢視偏見","發展興趣和目標感"]],
+ ["自主管理","🎯",["情緒管理","運用壓力管理策略","設定個人和集體目標","使用計畫和組織技巧等"]],
+ ["社會覺察","👀",["觀點取替","展現對他人的關懷、同理和表達感謝","欣賞多元性","辨識社會規範和情境需求","歸屬感"]],
+ ["人際技巧","🤝",["與他人發展正向關係","實踐團隊合作解決問題","有建設性的解決衝突","為他人挺身而出等"]],
+ ["負責任的決定","⚖️",["開放的心態","學習如何在分析信息、數據和事實後做出判斷","預測和評估個人行為的後果","反思自己在促進個人、家庭和社會福祉所扮演的角色等"]]
+];
+document.getElementById('five').innerHTML=CASEL.map(c=>`<div class="flip" onclick="this.classList.toggle('on')"><div class="in"><div class="f"><div class="ic">${c[1]}</div><h4>${c[0]}</h4><small>點我翻面看培力</small></div><div class="b"><h4>${c[0]}｜培力</h4><ul>${c[2].map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>`).join('');
+
+/* ===== Frameworks ===== */
+function fwRows(rows){return rows.map(r=>`<div class="fw-row"><div class="k"><b>${r[0]}</b><small>${r[1]}</small></div><div class="v">${r[2]}</div></div>`).join('')}
+document.getElementById('emc').innerHTML=fwRows([
+ ["同理","Empathy","理解與感受他人的情緒；從不同處境取替觀點，回應他人的經驗。"],
+ ["正念","Mindfulness","專注當下，覺察身體、思想與情緒；以不評判的態度觀察，選擇合宜回應。"],
+ ["慈悲","Compassion","關懷自己與他人的困難；培養減輕痛苦的意願，採取善意與助人行動。"],
+ ["批判探究","Critical Inquiry","根據觀察與證據檢視主張；反思假設與偏見，以推理及對話形成判斷。"]
+]);
+document.getElementById('see1').innerHTML=fwRows([
+ ["注意與自我覺察","個人・覺察","覺察身體感受與情緒的種類、強度；理解自己的心理活動。"],
+ ["自我慈悲","個人・慈悲","理解情緒背後的需求與情境；接納自己與情緒，減少自我苛責。"],
+ ["自我調節","個人・投入","調節身體與壓力反應，維持注意；管理衝動，建設性地回應情緒。"],
+ ["人際覺察","社會・覺察","注意他人的存在與處境；理解共同需求，尊重多樣性與個別差異。"],
+ ["對他人的慈悲","社會・慈悲","理解他人的情緒與需求；培養善意、寬恕、耐心、知足、慷慨與謙遜。"],
+ ["人際技巧","社會・投入","同理傾聽、適切溝通與助人；轉化衝突，促進合作與和解。"]
+]);
+document.getElementById('see2').innerHTML=fwRows([
+ ["理解相互依存","系統・覺察","運用系統思考，看見世界的相互連結；理解個人如何影響系統，也如何受到系統影響。"],
+ ["認識共同人性","系統・慈悲","肯認所有人的基本平等與共同人性；理解文化、制度與結構如何影響福祉，以及延續或改善不平等。"],
+ ["社區與全球參與","系統・投入","看見個人與合作促成正向改變的可能；共同探索與反思創意方案，回應社區及全球問題。"]
+]);
+const SEED=[
+ {ax:"自我",cls:"self",cores:[
+  {c:"自我覺察",subs:[
+   ["情緒覺察",["覺察自己的情緒。","清楚命名自己的情緒。","理解引發情緒的外在原因，以及不同情緒反應的後果（包含：人際關係、環境變化、壓力事件、生活事件、身體健康）。","理解內在因素對情緒的影響（包含：需求、信念、價值觀、詮釋、因果歸因）。"]],
+   ["探索自我",["能夠發掘自己的特質、需求與性向。","探索並發掘積極的人生觀（人生目標、人生意義、人生價值）。","從外在訊息中認識別人眼中的自己。"]],
+   ["自我認同",["接納並認同自己的性別、身分、文化和語言資產。","培養自我效能感及成長性思維。"]]]},
+  {c:"自我管理",subs:[
+   ["情緒調節",["接納情緒。","以情緒焦點的方式調節情緒（包含：轉念、感恩、注意力轉移）。","以問題焦點的方式調節情緒（包含：探究問題、解決問題）。","以外在焦點的方式調節情緒（包含：尋求社會支持、身體放鬆、運動）。"]],
+   ["動機管理",["能夠啟動行為、自我激勵並且自主完成任務（後設認知、自我監控）。","能保持專注、延宕即時滿足並成功抵抗誘惑。","面對挑戰時能夠維持意志力與恆毅力。"]],
+   ["目標管理",["設定目標及次目標、對工作項目進行組織排序、制定計畫。","尋求及運用資源或策略執行計畫，或尋求幫助。","能使用開放及創意的策略完成自己的目標。"]]]}]},
+ {ax:"他人",cls:"other",cores:[
+  {c:"人際覺察",subs:[
+   ["同理欣賞",["積極傾聽與覺察他人情緒及情緒背後的需求、信念及價值（觀點取替、同理心）。","辨識他人的語言與非語言（如肢體語言、眼神接觸、面部表情等）訊息。","發掘他人的優點，並能覺察他人對自己的付出（知恩、念恩）。"]],
+   ["多元觀點",["好奇與理解不同性別認同、族群、文化和背景的人。","覺察自身思考及判斷的局限（包含刻板印象、偏見和歧視）。"]],
+   ["辨識危機",["認識他人可能因某些需求而做出不道德行為。","評估他人企圖，識別霸凌、欺騙、騷擾等情況。","辨識保護自己的方法與資源。"]]]},
+  {c:"人際技巧",subs:[
+   ["友善溝通",["建立關係，維持友誼，友善對待他人，積極接納與表達感恩（謝恩、報恩）。","尊重多元文化、觀點與他人的選擇，寬恕包容他人的過失。","對他人行為客觀觀察、不帶評價，清晰表達自身感受，用正向語言向對方提出明確請求。","建設性地解決衝突，如雙贏策略、妥協讓步，尋求共同利益。"]],
+   ["團隊合作",["學習與他人協作、建立信任感，達成共同目標。","培養領導力，營造和諧團隊氣氛。"]],
+   ["人我界線",["立定界線，勇敢拒絕不合理的要求，勇敢爭取自己的權益。","能夠處理危機、違規、不正當的處境，保護自己。"]]]}]},
+ {ax:"群體",cls:"group",cores:[
+  {c:"責任思辨",subs:[
+   ["理解規範與責任",["能覺察社會規範、倫理道德之內涵及對社會的意義。","了解人與社群、自然的相互依存關係，並培養個人對群體、自然的責任感。"]],
+   ["思辨後果",["能思辨個人不同的行為對社群福祉可能產生的正面或負面的影響。","認同社會規範、倫理道德之內涵。","反思文化價值、社會規範及倫理道德。"]]]},
+  {c:"決定承擔",subs:[
+   ["抉擇與承擔",["對個人行為和社會互動做出建設性選擇。","能勇敢承擔責任並面對決策後的結果，履行公民及群體的社會責任。","依據倫理道德拒絕從事不道德、不安全、不合法或涉及霸凌的行為。"]],
+   ["關懷與實踐",["主動關懷社群及全球議題，並思考社會問題的解決方案。","積極參與、倡議並領導親社會行動。"]]]}]}
+];
+document.getElementById('seed').innerHTML=SEED.map(a=>`<div class="seed-axis ${a.cls}"><h4>主軸：${a.ax}</h4><div class="grid g2">${a.cores.map(c=>`<div><b style="color:var(--green)">核心概念｜${c.c}</b>${c.subs.map(s=>`<details><summary>${s[0]}</summary><ul>${s[1].map(x=>`<li>${x}</li>`).join('')}</ul></details>`).join('')}</div>`).join('')}</div></div>`).join('');
+document.querySelectorAll('#fwtabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#fwtabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('#p-frameworks .sub').forEach(s=>s.classList.toggle('on',s.id==='s-'+b.dataset.s));
+});
+
+/* ===== K-12 data (grades 0..12) ===== */
+const K=[
+ ["A","自我","1.自我覺察","1-1.自我概念",["表達自己的喜好","能描述我是誰","能辨認我喜歡自己哪些地方","能辨別我和朋友的共同點","能辨別是什麼讓我獨特、與眾不同","能了解我的同儕是如何看待我以及我對此有什麼感受","能了解我所愛的人是如何看待我以及我對此有什麼感受","能了解我正在經歷的變化","能描述我的人格特質並選擇我想要改進的地方","能了解其他人會如何影響我的選擇","能辨認並運用我的優勢","能思考我想成為怎樣的人","能評估自己的優勢和挑戰，並制定策略"]],
+ ["A","自我","1.自我覺察","1-2.自我效能",["辨識並參與自己能完成的任務","能珍視我現在能做到的事情和以前不能做到的事情","能把困難的任務當作好的挑戰","能訓練我的大腦變得更聰明","能接受有助於我成長的挑戰","儘管其他人不相信，我也能相信我自己的技能","安排我的學習時間以學得更好","能透過練習增長我的智能","能克服失敗帶來的挫折感","我知道當我克服學術的挑戰，會讓我變得更聰明","能接受批評讓自己變得更好、更突出","能運用以往的經驗思考問題解決策略","反思來自同儕、教師等他人的回饋，分析自己的能力"]],
+ ["A","自我","1.自我覺察","1-3.情緒覺察",["辨認自己的情緒","能注意自己的感受","能覺察自己感到焦慮","能確認自己何時會同時感受到兩種情緒","能辨別是什麼讓我感到尷尬","能評估我的憤怒","能注意到他人何時感到難過或生氣","能辨別我的感受和我想要的感受","能辨認我同時感受到的不同情緒","能注意我的思想和身體面對情緒時的反應","能連結我的情緒和引發它們的因素","能連結我的情緒和它們所導致的後果","反思來自同儕、教師和其他成年人的回饋，分析有助於或限制自己的個人特質"]],
+ ["A","自我","2.自我管理","2-1.情緒管理",["嘗試表達自己的情緒","能用深呼吸冷靜下來","能停止可怕的想法","能以適當的程度體驗我的情緒","能感受對我有益的情緒","能以健康的方式處理我的憤怒","能冷靜地應對他人的憤怒","能以自我對話讓我感覺好一點","當我感到生氣、害怕或擔心時，能放鬆自己","能接受自己的挫敗感、失落感、無助感","能夠自我對話管理自己的情緒","能冷靜我的想法來管理我的情緒","能連結我激動的想法和引起這些情緒的原因"]],
+ ["A","自我","2.自我管理","2-2.發展自律",["能依照指示達成任務","能在做我想做的事情之前，先完成我必須要做的事","能忍住誘惑並延後得到更好的獎勵","能等待合適的時機做我想做的事","當我不能做我想做的事情時，我能理解自己的感受","能控制我想做什麼就做什麼的衝動","能抑制欺騙（作弊）的衝動","能推遲干擾，直到合適的時間才去做","我能放棄眼前的獎勵，以換取未來實現更大目標的機會","學習控制衝動的方法","能以自律和自主的方式追求我的目標","能設定未來五年的個人目標並制定達成這些目標的計畫","學習將我的人生計畫分解成我可以遵循的步驟"]],
+ ["A","自我","2.自我管理","2-3.復原力與適應力",["辨識對自己有熟悉感、歸屬感的人和情境","當我沒有得到我想要的東西時，我會冷靜下來","如果可以的話，能改變令人挫折的情況","如果原本的方法行不通，能尋找另一種方法來獲得我想要的","能知道什麼時候我可以改變令人挫折的情況，以及什麼時候我不能改變","當我無能為力時，能保持冷靜","透過專注我能做的事情來應對挫折","能以積極的想法取代挫折的想法","當我感到挫折時能控制我的反應，不傷害到任何人","能停止因挫折所引發的一連串負面情緒","能知道我可以改變的事情和我不能改變的事情之間的區別","能評估以後可能干擾我目標的阻礙並思考如何應對","能享受接受挑戰所需付出的努力"]],
+ ["B","他人","3.社會覺察","3-1.觀點取替",["表現對他人的感受、需求和興趣的覺察","能從他人的眼中看事情","能從他人的角度，理解他們所看到的","能理解他人行為背後的原因","能辨別是什麼讓我獨特或與眾不同","能尋找更多的資訊以更充分地了解他人的觀點","能將受我決定影響的每個人的觀點納入考量","能透過站在不同社會群體的角度來了解他們的觀點","能採納與我不同的社會群體的人的觀點","討論多元觀點的價值並描述他人與自己不同的觀點","認識社會內不同群體有不同的價值觀、意見和態度，並與自己的觀點進行比較","評估困境時，能考慮多元視角，並選擇其中最優的解決辦法","能看見社會衝突中的不同觀點，以更好地了解其根源和可能帶來的後果"]],
+ ["B","他人","3.社會覺察","3-2.同理心",["表現對他人的感受、需求和興趣的覺察","能觀察他人的表情以了解他人的感受","能理解同理跟同情的差別","能理解他人的感受","能同理別人發生不好的事時的感受","能同理不被同學友善對待（霸凌）的人著想","能同理身障人士的感受","能同理受歧視者的感受","能同理親人手足的感受","能同理朋友的感受","我能體會他人遇到困境時的感受","能運用同理心培養我的正義感","能運用同理心引導我的社會責任感"]],
+ ["B","他人","3.社會覺察","3-3.親社會行為",["表現對他人的感受、需求和興趣的覺察","能遵守規則","能注意到他人需要幫助","能分享我所擁有的","能邀請落單的人","能安慰他人","能在我擅長的事情上提供協助","能主動關懷那些感到被排斥的人","能在日常生活中愛護環境","能承擔保護環境的責任","能提供真誠、謙虛和尊重他人的幫助","能尋找我可以協助他人的方法","能運用我的技能讓我的社區變得更美好"]],
+ ["B","他人","4.正向溝通","4-1.積極傾聽",["回應他人的感受、需求和興趣","能不打斷他人地仔細聆聽","能讓他人覺得我在聆聽並且關心","能使用非語言來表達我對正在聆聽的內容的興趣","能確認我明白他人想告訴我什麼","遇到沒聽懂的狀況時，我能詢問與澄清","能夠適當給予對方反饋","能讀取對方非語言訊息","我能向對方確認他的非語言訊息想表達的意涵","我能集中注意力在他人想要告訴我的事情上並且表達我的關心","我能傾聽而不給建議、說教、輕視或責備","我能對他人所表達的資訊不做評價","辯論想法時，我能好好地傾聽並理解對方的論點和觀點後，才作表達"]],
+ ["B","他人","4.正向溝通","4-2.自我表達",["回應他人的感受、需求和興趣","當我遇到不喜歡的事情時，可以委婉且堅定地說：「不」","能勇敢地面對不懷好意的人","能以清晰、堅定的方式回應，但不咄咄逼人","我能以不傷害他人的方式表達我的感受和看法","我能以不傷害他人的方式為自己挺身而出","我能以不傷害他人的方式保護我的朋友","我能制止冒犯或傷害我的情況","我能跟朋友說我的感受，以及我需要從他們那裡得到什麼、不需要什麼","我能以不冒犯和傷害他人的方式拒絕我不想做的事情","面對困境時，我能區分挑釁、被動和自信反應之間的區別","我能在群體思考時維護自己的想法，不受他人影響","我能在群體思考時維護自己的想法，不受他人影響"]],
+ ["B","他人","4.正向溝通","4-3.衝突管理",["回應他人的感受、需求和興趣","我能妥善表達自己的意見、想法","當我們不同意怎麼做時，我能與朋友達成妥協","我能尋找雙贏的解決方案來管理衝突","我能在發洩憤怒之前先三思","我能調節衝突情境時的溫度","我能冷靜地評估問題，並集思廣益尋找解決方案","我能找到雙贏的方案解決與他人的衝突","我能緩和自己與朋友的衝突","我能調解兩個有衝突的朋友，以免他們互相傷害","我能體認自己做錯了什麼以及如何彌補","我能使用有計畫的對話來尋找雙贏的方案解決衝突","當性別刻板印象影響我的人際關係時，我能查明並挑戰它"]],
+ ["C","群體","5.負責任的決策","5-1.創造性思維",["參與團體活動，學習合作、創意","關於一個主題可以提出很多想法","能使用不同的標準將想法進行分類","能產出其他人可能想不到的獨特想法","能進一步闡述一個想法","能以全新的角度看待一個問題","能制定詳細的計劃來解決問題","能使用思考帽評估問題的潛在解決方案","能評估自己的壓力程度與壓力源","學習應對壓力的方式","我能使用建設性的策略來應對壓力","我能想像我一生中能成為的人、能做的事，以及能達成的目標","能在壓力情境下保持自我覺察與管理"]],
+ ["C","群體","5.負責任的決策","5-2.批判性思維",["參與團體活動，學習合作、創意","能組織我自己的看法","能尋找資訊來做決定","能質疑關於男孩和女孩喜歡什麼的刻板印象","能質疑我所看到的內容以形成我自己的觀點","能區分自己的觀點和他人的觀點","能質疑廣告資訊以及它們如何影響我的世界觀","能區分事實和觀點","能質疑我在媒體上所看到的內容以形成我自己的觀點","能質疑人們用來逃避傷害他人的藉口","能辨認我自己的偏見以及它們如何影響想他人","行動前能三思而後行","能質疑可能對我的決定或未來帶來負面影響的信念"]],
+ ["C","群體","5.負責任的決策","5-3.責任感",["參與團體活動，學習合作、創意","能照顧好我自己和我的東西","當不知所措時能尋求幫助","能履行我的義務","能關懷地球的整潔","能沒有任何藉口地承認自已的錯誤","能為我給別人帶來的感受負責","能坦誠地面對我的行為所造成的後果","能從錯誤中汲取教訓","能承認我的錯誤並且彌補它們","能守護我自己和其他人的安全和福祉","計劃學校和社區項目，並充分利用資源來實現目標","能承擔起讓世界變得更美好的責任"]]
+];
+const gName=g=>g===0?"幼教":g<=6?`國小 ${g} 年級`:g<=9?`國中 ${g} 年級`:`高中 ${g} 年級`;
+const gStage=g=>g===0?"幼教":g<=2?"國小低":g<=4?"國小中":g<=6?"國小高":g<=9?"國中":"高中";
+let kmode='grade',kf=['A','B','C'];
+const chips=document.getElementById('kchips');
+chips.innerHTML=[['A','A. 自我'],['B','B. 他人'],['C','C. 群體']].map(c=>`<button class="on" data-f="${c[0]}">${c[1]}</button>`).join('');
+chips.querySelectorAll('button').forEach(b=>b.onclick=()=>{const f=b.dataset.f;kf=kf.includes(f)?(kf.length>1?kf.filter(x=>x!==f):kf):[...kf,f];chips.querySelectorAll('button').forEach(x=>x.classList.toggle('on',kf.includes(x.dataset.f)));drawK()});
+const sel=document.getElementById('scsel');
+sel.innerHTML=K.map((r,i)=>`<option value="${i}">${r[0]}. ${r[1]}｜${r[2]}｜${r[3]}</option>`).join('');
+const gr=document.getElementById('grange');
+gr.oninput=drawK;sel.onchange=drawK;
+document.getElementById('m-grade').onclick=()=>setMode('grade');
+document.getElementById('m-line').onclick=()=>setMode('line');
+function setMode(m){kmode=m;document.getElementById('m-grade').className='btn'+(m==='grade'?'':' ghost');document.getElementById('m-line').className='btn'+(m==='line'?'':' ghost');document.getElementById('ctrl-grade').style.display=m==='grade'?'':'none';document.getElementById('ctrl-line').style.display=m==='line'?'':'none';chips.parentElement.style.display=m==='grade'?'':'none';drawK()}
+function drawK(){
+  const out=document.getElementById('kout');
+  if(kmode==='grade'){
+    const g=+gr.value;document.getElementById('gnow').textContent=gName(g);
+    out.innerHTML=K.filter(r=>kf.includes(r[0])).map(r=>`<div class="goal ${r[0]}"><div class="path">${r[0]}. ${r[1]} › ${r[2]}</div><div class="scn">${r[3]}</div><div class="txt">${r[4][g]}</div><div class="nb">${g>0?`<span>前一年：${r[4][g-1]}</span>`:''}</div></div>`).join('');
+  }else{
+    const r=K[+sel.value];
+    out.innerHTML=r[4].map((t,g)=>`<div class="goal ${r[0]}"><div class="path">${gStage(g)}</div><div class="scn">${gName(g)}</div><div class="txt">${t}</div></div>`).join('');
+  }
+}
+drawK();
+
+/* ===== Indicators ===== */
+const IND=[
+ {n:"1. 自我覺察",d:"理解自己的情緒、思想和價值觀，以及它們如何跨情境脈絡的影響行為，包括自信的面對個人優勢和侷限並設定目標。",t:["整合個人和社會認同","識別個人、文化和語言資產","識別個人的情緒","表現誠實和正直","連結感受、價值觀和想法","檢查成見和偏見","體驗自我效能","擁有成長心態","培養興趣和目標感"],
+  i:[["1-1","透過自我覺察，引導學生訂定自我學習目標，並運用生活經驗或社會現象的真實案例，增進主動探究議題的興趣、動機與成長心態。"],["1-2","營造自主學習的環境，引導學生在價值澄清的過程中，覺察、辨識與調節自己的情緒，探索個人與他人相互依存的關係，培養尊重多元與同理關懷的態度。"]]},
+ {n:"2. 自我管理",d:"在不同情況下有效管理自己的情緒、思想與行為並實現目標與願望的能力，包括延遲滿足、管理壓力以及實現個人和集體目標的動機與能動性。",t:["管理個人的情緒","識別和使用壓力管理策略","表現出自律和自我激勵","設定個人和集體目標","運用規劃和組織技能","勇於採取主動","展現個人和集體能動性"],
+  i:[["2-1","透過整合知識、態度、情意與技能的學習，引導學生展現對學習的好奇心與成長心態，提升自己的生活應用與問題解決能力。"],["2-2","藉由真實或情境化案例的探討，培養學生在生活情境中應用所學的能力，促進對議題的深度理解。"],["2-3","視議題性質與教學目的選擇適當的多元評量方式，據以了解學生在知識、情意、技能與實踐的學習表現，並促進其自主學習。"]]},
+ {n:"3. 社會覺察",d:"理解與同理不同背景、文化脈絡者觀點的能力，包括對他人慈悲，了解不同情境中歷史和社會對行為的規範，並知道來自家庭、學校和社區的資源與支持。",t:["換位思考","認識到他人的長處","表現同理和慈悲","關心他人的感受","理解和表達感謝","識別不同的社會規範，包括不公正的規範","認識情境需求和機會","了解組織和系統對行為的影響"],
+  i:[["3-1","能引導學生從個人、語言和社會文化等多元角度，對議題價值進行思辨，體認尊重多元、同理關懷、公平正義、永續發展等核心價值的重要性。"],["3-2","以跨領域/科目或結合相關議題的方式進行社會情緒學習的課程設計，引導學生整合運用各領域科目的知能與批判思考能力，分析社會問題/議題的成因、特性與影響。"],["3-3","設計學用合一的社會情緒學習活動，引導學生運用所學關心自我與他人的情緒與感受，展現個人和集體能動性，促進尊重多元、同理關懷、公平正義與永續發展的實踐。"]]},
+ {n:"4. 人際關係",d:"建立與維持健康和正向關係的能力，並在不同情境中能有效的領導個人和群體。這包括清晰溝通、積極傾聽、合作、協作解決問題與建設性地協商衝突、掌握不同情境的社會文化需求與機會，發揮領導作用，並在需要時尋求或提供幫助。",t:["有效溝通","發展正向關係","展示文化素養","練習團隊合作和協作解決問題","積極地解決衝突","抵抗負面的社會壓力","展現團隊領導力","在需要時尋求或提供支持和幫助","捍衛他人的權利"],
+  i:[["4-1","設計議題討論活動，引導學生分析該議題可能存在的對立觀點、偏見或文化衝突，發展溝通協調、團隊合作或領導統御的能力，增進學生對多元觀點的包容性。"],["4-2","透過覺知問題、理解知識、習得技能、價值思辨、實踐行動等多元層次的學習歷程，發展學生的問題意識，增進反思能力及與他人的正向互動。"],["4-3","鼓勵學生透過個人或與同儕對話的方式，主動探索社會情緒學習議題，並適時提出合宜的問題解決計畫或行動，預想和評估實施方案可能發生的結果，或是思考其他可行的創新方案。"]]},
+ {n:"5. 負責任的決定",d:"在不同情況下對個人行為和社會互動做出關懷和建設性選擇的能力。這包括考慮道德標準和安全問題的能力，以及評估各種行動對個人、社會和集體福祉的利益和後果的能力。",t:["表現出好奇心和開放的心態","學習如何在分析訊息、數據和事實後做出合理的判斷","找出個人和社會問題的解決方案","預測和評估個人行為的後果","認知到批判性思考的技能在校內外的助益","反思個人在促進自我、家庭和社區福祉的角色","評估個人、人際關係、社區和機構的影響"],
+  i:[["5-1","協助學生運用各種不同的資訊，分析自我與他人、制度、校園或社區環境的關係，並研擬解決問題的方法，增進彼此的正向互動。"],["5-2","鼓勵學生討論與發展個人和社會問題的解決方案，並評估其對個人、群體和制度的影響，以謀求彼此的互惠與共好，促進公民參與及永續發展。"],["5-3","引導學生關心本土與全球重要議題的發展趨勢，反思自己對個人、家庭和社區福祉的可能貢獻，培養宏觀視野以及對永續發展的責任感。"]]}
+];
+document.getElementById('ind').innerHTML=IND.map(f=>`<div class="ind-face"><div class="hd"><div class="nm">${f.n}</div><div class="ds">${f.d}<div class="tags">${f.t.map(x=>`<span>${x}</span>`).join('')}</div></div></div><details class="ind-d" style="border:0;margin:0;border-radius:0;border-top:1px dashed var(--line)"><summary>教學指標（${f.i.length} 條）</summary><div>${f.i.map(x=>`<div class="ind"><b>${x[0]}</b><div>${x[1]}</div></div>`).join('')}</div></details></div>`).join('');
+function toggleInd(o){document.querySelectorAll('.ind-d').forEach(d=>d.open=o)}
+
+/* ===== Quiz ===== */
+const OPTS=["延伸｜貢獻","延伸｜添加","連結｜轉化","連結｜社會行動","主題式","特色課程"];
+const QS=[
+ ["數學課上，老師介紹一位數學家走過失敗的經歷。","延伸｜貢獻","點綴與 SEL 有關的人物或故事，數學內容本身沒有改變。"],
+ ["上課前做情緒 check-in，下課寫反思日誌。","延伸｜添加","另外加入 SEL 活動，數學內容不變。"],
+ ["一題多解畫廊：學生要聽懂並比較別人的解法，任務才算完成。","連結｜轉化","重新設計數學任務，SEL 成為完成任務的一部分。"],
+ ["統計班上同學的睡眠時間，整理成建議交給學校。","連結｜社會行動","用數學分析真實問題，並提出行動。"],
+ ["國中綜合活動的輔導課程，以 SEL 為單元主題上了幾節課。","主題式","主體為 SEL 內容，以單節或多節課單元實施，並非整學期。"],
+ ["學校規劃跨學期、跨領域的社會情緒學習校本課程。","特色課程","主體為 SEL 內容，以學期或跨學期、跨領域方式實施。"]
+];
+let qi=0,score=0,answered=false;
+function drawQ(){
+  const q=document.getElementById('quiz');
+  if(qi>=QS.length){q.innerHTML=`<div class="q">🎉 完成！答對 ${score} / ${QS.length} 題</div><button class="btn" onclick="qi=0;score=0;drawQ()">再玩一次</button>`;return}
+  const it=QS[qi];answered=false;
+  q.innerHTML=`<div style="color:var(--muted);font-size:13.5px">第 ${qi+1} / ${QS.length} 題</div><div class="q">${it[0]}</div><div class="opts">${OPTS.map(o=>`<button data-o="${o}">${o}</button>`).join('')}</div><div class="fb" id="qfb"></div>`;
+  q.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+    if(answered)return;answered=true;const ok=b.dataset.o===it[1];if(ok)score++;
+    q.querySelectorAll('.opts button').forEach(x=>{if(x.dataset.o===it[1])x.classList.add('ok');else if(x===b)x.classList.add('no')});
+    document.getElementById('qfb').innerHTML=`${ok?'✅ 答對了！':'❌ 正解是「'+it[1]+'」。'}${it[2]} <button class="btn" style="margin-left:8px;padding:5px 12px" onclick="qi++;drawQ()">下一題 →</button>`;
+  });
+}
+drawQ();
+
+/* ===== Venn ===== */
+const VZ={
+ "SEL-K":["SEL Knowledge","關於社會情緒學習本身的知識：例如 CASEL 五大核心、UNESCO EMC²、SEE Learning 與 SEED 六向度等架構內涵。"],
+ "PK":["Pedagogical Knowledge","一般性的教學知識：班級經營、提問、分組合作、評量等教學方法。"],
+ "CK":["Content Knowledge","學科內容知識：例如數學的概念、算法與解題推理。"],
+ "SEL-PK":["SEL-PK","一般性教學過程中，可促進 SEL 的班級經營。例：教師示範「這題我第一次也算錯」，建立可以說「我不會」、可以答錯的課堂氣氛。"],
+ "SEL-CK":["SEL-CK","在我們領域當中與 SEL 直接有關或可連結的內涵。例：同一組數據為什麼能畫出讓人印象完全不同的統計圖，連結多元觀點與負責任的判斷。"],
+ "PCK":["PCK","學科教學知識：知道如何把這個學科內容教好。"],
+ "SEL-PACK":["SEL-PACK","三者的交集：如何在本領域的教學中，讓學生在學習本領域的過程中也同時獲得 SEL 的經驗。例：「同一道應用題的三種解法」，從覺察直覺反應、檢驗推理、重述他人思路到反思自己看法的改變。"]
+};
+function showZ(z){const v=VZ[z];document.getElementById('vinfo').innerHTML=`<h4>${z}</h4><div style="color:var(--muted);font-size:13.5px;margin-bottom:6px">${v[0]}</div><p style="margin:0">${v[1]}</p>`}
+document.querySelectorAll('.venn .zone').forEach(c=>c.addEventListener('click',e=>{e.stopPropagation();showZ(c.dataset.z)}));
+showZ("SEL-PACK");
+
+/* ===== Toolbox ===== */
+const fab=document.getElementById('fab'),dr=document.getElementById('drawer');
+fab.onclick=()=>dr.classList.toggle('on');
+dr.querySelectorAll('.tt button').forEach(b=>b.onclick=()=>{dr.querySelectorAll('.tt button').forEach(x=>x.classList.toggle('on',x===b));dr.querySelectorAll('.tool').forEach(t=>t.classList.toggle('on',t.id===b.dataset.t))});
+let tSec=300,tLeft=300,tInt=null;
+const td=document.getElementById('tdisp'),tgo=document.getElementById('tgo');
+const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+function tRender(){td.textContent=fmt(tLeft);td.classList.toggle('end',tLeft===0)}
+dr.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{clearInterval(tInt);tInt=null;tgo.textContent='開始';tSec=tLeft=b.dataset.m*60;tRender()});
+tgo.onclick=()=>{if(tInt){clearInterval(tInt);tInt=null;tgo.textContent='繼續';return}if(tLeft===0)tLeft=tSec;tgo.textContent='暫停';tInt=setInterval(()=>{tLeft--;tRender();if(tLeft<=0){clearInterval(tInt);tInt=null;tgo.textContent='開始'}},1000)};
+document.getElementById('treset').onclick=()=>{clearInterval(tInt);tInt=null;tLeft=tSec;tgo.textContent='開始';tRender()};
+let drawn=[];
+document.getElementById('dgo').onclick=()=>{
+  const max=Math.max(2,Math.min(99,+document.getElementById('dmax').value||6));const nr=document.getElementById('dnorep').checked;
+  let pool=Array.from({length:max},(_,i)=>i+1);if(nr)pool=pool.filter(x=>!drawn.includes(x));
+  const o=document.getElementById('dout');if(!pool.length){o.textContent='全抽完';drawn=[];return}
+  let k=0;const spin=setInterval(()=>{o.textContent=pool[Math.floor(Math.random()*pool.length)];if(++k>12){clearInterval(spin);const v=pool[Math.floor(Math.random()*pool.length)];o.textContent=v;if(nr)drawn.push(v)}},60);
+};
+let bInt=null;
+document.getElementById('bgo').onclick=()=>{
+  const c=document.getElementById('bcircle'),t=document.getElementById('btext'),b=document.getElementById('bgo');
+  if(bInt){clearInterval(bInt);bInt=null;c.classList.remove('in');t.textContent='準備好就按開始';b.textContent='開始 1 分鐘呼吸';return}
+  let n=0;b.textContent='停止';const step=()=>{if(n>=15){clearInterval(bInt);bInt=null;c.classList.remove('in');t.textContent='完成，感謝自己 🌿';b.textContent='再來一次';return}const inh=n%2===0;c.classList.toggle('in',inh);t.textContent=inh?'吸氣…':'吐氣…';n++};step();bInt=setInterval(step,4000);
+};
+
+/* ===== SAFE check ===== */
+const SAFEQ=[["S 循序漸進","我是否把要教的 SEL 技能拆成小步驟，並安排了先後順序？"],["A 主動參與","學生是否透過角色扮演、小組討論或情境模擬實際練習，而不只是聽講？"],["F 聚焦重點","我是否在進度中撥出明確且充足的專屬時間，專注於特定的 SEL 知能？"],["E 目標清晰","我是否清楚寫出要學的特定技能（如同理心、衝突解決），而不是籠統的概念？"]];
+let safeS=sget('sel-safe',[]);
+function drawSafe(){document.getElementById('safe-chk').innerHTML=SAFEQ.map((q,i)=>`<label class="chk"><input type="checkbox" data-i="${i}" ${safeS.includes(i)?'checked':''}><div><b>${q[0]}</b><br>${q[1]}</div></label>`).join('');document.getElementById('safe-score').textContent=`${safeS.length} / 4`;
+document.querySelectorAll('#safe-chk input').forEach(c=>c.onchange=()=>{const i=+c.dataset.i;safeS=c.checked?[...safeS,i]:safeS.filter(x=>x!==i);sset('sel-safe',safeS);drawSafe()})}
+drawSafe();
+/* ===== Motivation continuum ===== */
+const CONT=[["無動機","Amotivation","不知道為什麼要做，覺得做了也沒用","反正我數學就是爛，算了。","#7a7f8a"],["外在調節","External","為了得到獎賞、避免懲罰","不寫會被罰寫，還會被叫家長。","#9a5b5b"],["內攝調節","Introjected","為了避免罪惡感、焦慮或丟臉","考不好很丟臉，爸媽會失望。","#a8794a"],["認同調節","Identified","<b style='color:#c0392b'>認同這件事對自己有價值</b>","我想讀電機科，數學一定要學好。","#7b8f3f"],["統整調節","Integrated","價值已經和「我是誰」融為一體","我就是會把問題想清楚的人。","#4f8a3c"],["內在動機","Intrinsic","因為有趣、享受本身","這題好有意思，我想再找另一種解法。","#2f6f2a"]];
+function showC(i){document.querySelectorAll('#cont button').forEach((b,j)=>b.classList.toggle('on',i===j));const c=CONT[i];document.getElementById('cont-info').innerHTML=`<b style="color:var(--navy)">${c[0]}（${c[1]}）</b>：${c[2]}<div class="say">💬 數學課裡學生會說：「${c[3]}」</div>`}
+document.getElementById('cont').innerHTML=CONT.map((c,i)=>`<button style="background:${c[4]}" data-i="${i}">${c[0]}<small>${c[1]}</small></button>`).join('');
+document.querySelectorAll('#cont button').forEach(b=>b.onclick=()=>showC(+b.dataset.i));
+showC(3);
+
+/* ===== Strategy cards ===== */
+const ANX=[
+ {id:"a1",n:"考前寫下擔心",sub:"表達性書寫",when:"段考、小考前 10 分鐘",meta:["段考或小考前","約 10 分鐘"],st:2,
+  how:["考前發一張白紙，先說：「這張紙不收、不改、不給別人看。」","請學生寫 6–10 分鐘：「想到等一下的數學考試，你擔心什麼？心裡有什麼感受？」","鼓勵寫深一點：「為什麼會擔心？最壞會怎樣？我可以怎麼看這件事？」","寫完把紙對折，自己收好或丟進信封。","開始考試。"],
+  find:["美國九年級期末考的田野實驗：考前寫下擔心，<em class='hl'>考試焦慮越高的學生，分數進步越多</em>。","九年級 1,175 人的隨機實驗：低收入學生的不及格率由 39% 降到 18%。"],
+  warn:["原研究是生物、科學考試或大學生的數學，國中數學的直接證據還少","寫的內容不批改、不評論"],ref:"Ramirez & Beilock (2011)；Park et al. (2014)；Rozek et al. (2019)"},
+ {id:"a2",n:"心跳加速是在幫你",sub:"焦慮再評估",when:"考試、上台前 3–5 分鐘",meta:["考試或上台前","約 3–5 分鐘"],st:2,
+  how:["考前請學生注意自己的身體：心跳變快、手心流汗、胃緊緊的。","老師說：「這些反應不代表你不行，是身體在幫你準備，給你更多能量。」","「運動員比賽前也會這樣，他們把緊張當成能量來用。」","請學生深呼吸一次，對自己說：「我準備好了。」","開始考試或作答。"],
+  find:["社區大學補救數學課 93 人的隨機實驗：讀了「壓力反應能幫助表現」說明的學生，<em class='hl'>數學評量焦慮較低、考試成績較高</em>；原因是他們覺得自己有能力應付。","九年級科學課的大型實驗也有效。"],
+  warn:["重點不是叫學生「不要緊張」，而是換個方式看緊張","研究對象以成人與科學科為主"],ref:"Jamieson et al. (2016)；Rozek et al. (2019)"},
+ {id:"a3",n:"兩人互當小老師",sub:"互惠式同儕教學",when:"每週固定一段時間",meta:["每週固定一段時間（例如 20–30 分鐘）"],st:2,
+  how:["兩人一組，程度可以相近。","每人從剛學過的習題裡挑一題，自己先解好，當作要出給夥伴的題目。","輪流當小老師：出題給夥伴做，夥伴做完後，小老師檢查並講解。","講解時先說「你哪一步做對了」，再說「這一步可以怎麼改」。","交換角色，再做一輪。","老師巡視，只在兩人都卡住時才介入。"],
+  find:["西班牙一所中學七至九年級 420 人（實驗組、控制組各 210）：<em class='hl'>數學學習焦慮下降 g = 0.84、評量焦慮下降 g = 0.42</em>，男女、各年級都改善；控制組沒有變化。"],
+  warn:["單一學校的研究，沒有報告成績","問同學比在全班面前問老師壓力小，可能是有效的原因之一"],ref:"Moliner & Alegre (2020)"},
+ {id:"a4",n:"每堂三題不計分小考",sub:"低壓提取練習",when:"每堂課開頭 5 分鐘",meta:["每堂課開頭","約 5 分鐘"],st:1,
+  how:["上課一開始投影 3 題，考上一堂或上週的內容。","學生自己寫，約 3 分鐘。","公布答案，學生自己對，<em class='hl'>不登記分數</em>。","請寫錯的同學看一下錯在哪，老師挑一題全班講。","每堂都做，讓「被考」變成日常的事。"],
+  find:["美國國高中 1,408 人的問卷：72% 的學生說，常態化的低壓小考讓他們對單元考與段考<em class='hl'>比較不緊張</em>；92% 認為有助學習。"],
+  warn:["是學生自陳、沒有對照組，不能說「研究證實能降低焦慮」","關鍵是不計分"],ref:"Agarwal et al. (2014)"}
+];
+const BST=[
+ {id:"b1",n:"評論學長姐的數學引言",sub:"效用價值",map:"動機內化（認同調節）",meta:["單元中一節課","原研究 90 分鐘","對應：動機內化"],st:3,
+  how:["老師先簡短說明：數學在生活和工作中用在哪裡（5–10 分鐘）。","發 5–6 則真實人物談數學的引言，例如學長姐、技職工作者、家長。（示意：「我在汽修廠估材料，每天都要算比例。」）","每位學生挑 1–2 則，寫評論：「你同意他說的嗎？為什麼？」","接著寫：「這跟我現在或將來的生活有什麼關係？」","自願分享，老師把大家寫出的連結整理在黑板上。"],
+  find:["德國九年級 82 班、1,916 人的叢集隨機試驗：一次課堂活動，<em class='hl'>5 個月後</em>數學價值信念、自我概念、老師評的努力、<em class='hl'>標準化數學成績</em>都比控制組好。","「評論引言」比「自己寫文章」效果更強。"],
+  warn:["引言用真實、在地的人","流程依論文摘要改編，原文細節待核對"],ref:"Gaspard et al. (2015)；Brisson et al. (2017)"},
+ {id:"b2",n:"我學好數學可以幫誰",sub:"自我超越目的",map:"動機內化（認同、統整）",meta:["枯燥練習之前","約 15 分鐘","對應：動機內化"],st:3,
+  how:["在大量練習（例如解方程式）之前，先承認：「這種練習有點無聊，對吧？」","請學生想：身邊或世界上，有什麼事情你希望它變得更好？","寫一段：「我把數學學好，將來可以怎麼幫助別人？」例如幫家人算帳、當護理師算藥量、蓋房子。","請兩三位同學分享。","開始練習，老師提醒：「現在練的，就是在為那件事做準備。」"],
+  find:["4 個研究、2,000 多位青少年與年輕成人：寫下「學習如何幫助別人」的學生，<em class='hl'>更能堅持做越來越無聊的作業</em>；高中生數個月後數學與科學成績提升。","只談「自己好玩、好工作」的理由，沒有一致效果。"],
+  warn:["理由要學生自己寫，老師不代替說","美國樣本、單次介入"],ref:"Yeager et al. (2014)"},
+ {id:"b3",n:"給理由、給選擇、接納感受",sub:"自主支持",map:"自主性",meta:["每堂課都能用","對應：自主性"],st:3,
+  how:["<em class='hl'>給理由</em>：派作業時說為什麼。「這 5 題練去括號，下週解方程式每題都會用到。」","<em class='hl'>給有限的選擇</em>：「A 組基本題 6 題、B 組挑戰題 3 題，自己選一組。」或「畫圖或列式都可以。」","<em class='hl'>接納負面情緒</em>：學生說「好難、好煩」，先回「這單元真的不容易，我懂」，再說下一步。","<em class='hl'>用邀請語氣</em>：把「給我寫完」換成「你可以先從第一題試試看」。","給學生時間用自己的速度想，不急著給答案。"],
+  find:["回顧 51 個自主支持教學的介入研究（其中 38 個是隨機對照試驗）：老師<em class='hl'>學得會</em>這些做法；學會後，學生的動機與投入、班級氣氛都改善。"],
+  warn:["研究跨學科、跨年級，數學專屬的證據較少","自主不是放任：目標與標準不變"],ref:"Reeve & Cheon (2021)"},
+ {id:"b4",n:"讓學生看見你的熱忱",sub:"教師情緒傳遞",map:"歸屬感、內在動機",meta:["每堂課","對應：歸屬感、內在動機"],st:1,
+  how:["遇到漂亮的解法，直接說出感受：「這個解法好妙，我第一次看到也嚇一跳。」","偶爾分享你自己喜歡的一道題，以及喜歡它的原因。","學生提出不同解法時，表現好奇：「你怎麼想到的？說給大家聽。」","留意自己的表情與語氣：講到數學時，讓學生看得到你是享受的。"],
+  find:["德國七、八年級 71 班數學課：老師越享受教學，學生越享受數學課，<em class='hl'>中間是透過學生看到的老師熱忱</em>。","後續研究發現是雙向的：學生投入，老師也更享受。"],
+  warn:["相關研究，不能說熱忱「造成」學生享受","找你真正喜歡的部分，裝出來的學生看得出來"],ref:"Frenzel et al. (2009, 2018)"},
+ {id:"b5",n:"讓錯誤和挑戰成為常規",sub:"成長心態",map:"勝任感",meta:["學期初建立、平時持續","對應：勝任感"],st:2,
+  how:["學期初花一段時間說明：大腦會因練習而改變，卡住代表正在學。","回饋時稱讚<em class='hl'>策略與修正</em>，不稱讚聰明：說「你換了方法，所以解出來了」，不說「你好聰明」。","公開欣賞挑戰難題和訂正的人，例如每週挑一份「最有價值的訂正」。","安排比現有程度高一點的題目，讓學生在支持下成功。"],
+  find:["美國九年級全國樣本隨機實驗：不到 1 小時的線上成長心態課，提升<em class='hl'>低成就學生</em>的成績，但<em class='hl'>只在同儕支持挑戰的學校有效</em>。","整體後設分析的效果很小。"],
+  warn:["只上一堂成長心態課不夠，班級常規才是關鍵","不要過度承諾效果"],ref:"Yeager et al. (2019)；Macnamara & Burgoyne (2023)"}
+];
+const star=n=>'★'.repeat(n);
+function card(x){return `<div class="sc" id="sc-${x.id}"><div class="top"><h4>${x.n} <small>（${x.sub}）</small></h4><div class="m">${x.meta.map(m=>`<span>${m}</span>`).join('')}<span>證據 <b class="stars">${star(x.st)}</b></span></div></div>
+<div class="body"><div class="how"><span class="lbl">怎麼進行</span><ol>${x.how.map(h=>`<li>${h}</li>`).join('')}</ol></div>
+<div class="side"><span class="lbl f">研究發現</span>${x.find.map(f=>`<p>${f}</p>`).join('')}<span class="lbl w">注意</span>${x.warn.map(w=>`<p>・${w}</p>`).join('')}</div></div>
+<div class="ref">資料來源：${x.ref}。</div></div>`}
+function tbl(id,arr,col){const tb=document.querySelector('#'+id+' tbody');tb.innerHTML=arr.map(x=>`<tr data-t="sc-${x.id}"><td><b>${x.n}</b><br><small>${x.sub}</small></td><td>${x[col]}</td><td><span class="stars">${star(x.st)}</span></td></tr>`).join('');
+ tb.querySelectorAll('tr').forEach(r=>r.onclick=()=>document.getElementById(r.dataset.t).scrollIntoView({behavior:'smooth',block:'start'}))}
+document.getElementById('anx-cards').innerHTML=ANX.map(card).join('');
+document.getElementById('bst-cards').innerHTML=BST.map(card).join('');
+tbl('anx-tbl',ANX,'when');tbl('bst-tbl',BST,'map');
+
+/* ===== PERMA worksheet ===== */
+const WS=[["P 正向情緒","Positive Emotion"],["E 全心投入","Engagement"],["R 人際關係","Relationships"],["M 意義","Meaning"],["A 成就感","Accomplishment"]];
+let wsv=sget('sel-perma',['','','','','']);
+document.getElementById('ws-body').innerHTML=WS.map((w,i)=>`<tr><td><b>${w[0]}</b><br><small>${w[1]}</small></td><td><textarea data-i="${i}" placeholder="在數學課裡，我可以……"></textarea></td></tr>`).join('');
+document.querySelectorAll('#ws-body textarea').forEach(t=>{t.value=wsv[+t.dataset.i]||'';t.oninput=()=>{wsv[+t.dataset.i]=t.value;sset('sel-perma',wsv)}});
+document.getElementById('ws-copy').onclick=function(){copyText(WS.map((w,i)=>`${w[0]}：${wsv[i]||''}`).join('\n'),this)};
+
+document.querySelectorAll('[data-act]').forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById(a.dataset.act).scrollIntoView({behavior:'smooth',block:'start'})});
+
+/* ===== PERMA tune ===== */
+const TUNE_PROMPT="# 角色\n你是熟悉國中小數學教學與正向心理學 PERMA 的教學顧問。老師會給你一份數學課的設計（一個教學活動、一段流程或一整節課）。你的工作是給「小幅調整」建議，讓這個活動多一些 PERMA 五個幸福元素，而不是重新設計一堂課。\n\n# PERMA 五個元素（在數學課的意思）\n- P 正向情緒（Positive emotion）：好奇、有趣、安心、被肯定、有希望感\n- E 投入（Engagement）：專注、挑戰與能力相當、心流、動手動腦\n- R 人際關係（Relationships）：同儕支持、合作、被傾聽、師生連結\n- M 意義（Meaning）：知道為什麼學、跟生活或他人有關、能幫助別人\n- A 成就（Accomplishment）：看得到自己的進步、達成清楚的目標、被看見的成功\n\n# 調整的範圍（只用這些槓桿，不改數學內容與學習目標，也不明顯增加上課時間）\n1. 開場引導語：老師一開始怎麼說\n2. 作業／任務的成功標準：怎麼樣算完成、做得好\n3. 個人作業 → 小組作業（只有適合時）：分組方式，以及小組開始前要先提醒的事（角色分工、討論規則、卡住怎麼求助、怎麼確保每個人都參與）\n4. 課堂經營與氣氛營造：音樂、情境、座位、計時、小儀式、肯定的方式等\n5. 課後小反思：一到三題簡短的反思題\n\n# 輸出格式（Markdown，繁體中文）\n## 一、這個活動現在的 PERMA 樣貌\n| 元素 | 現在已經有的 | 可以多一點的地方 |\n（P、E、R、M、A 各一列，每格一句話）\n\n## 二、小幅調整建議\n依上面五個槓桿，各寫一小節（不適合的槓桿就寫「這個活動不建議改」並說一句理由）。每一小節包含：\n- **原本**：一句話描述原本的做法（老師沒寫到就寫「原設計未提及」）\n- **建議改成**：具體做法；引導語、成功標準、小組提醒、反思題要寫出**老師可以直接念或直接貼的文字**\n- **加強的元素**：標出 P／E／R／M／A\n- **注意**：一句話提醒可能的副作用（例如小組作業時程度落後的學生被晾在一邊）\n\n## 三、調整後的流程一覽\n| 時間 | 原本 | 調整後 | PERMA |\n（照原本流程的段落排；老師沒給時間就寫大約時間並標「約」）\n\n## 四、如果只能改一個地方\n挑一個最划算的調整，說明為什麼。\n\n# 規則\n- 改動要小：保留原本的數學內容、例題與學習目標；每個建議都要在原本的時間內做得到。\n- 寫給國中小數學老師看，用詞平實具體；建議要符合該年級學生的身心發展（國小低、中、高年級與國中的語言、專注時間與合作能力不同），不寫空泛口號（不要只寫「營造正向氣氛」，要寫怎麼做）。\n- 不要為了湊滿五個元素硬加；連結牽強的不寫。\n- 老師給的資料不夠時，先寫一句「我假設……」再給建議，不要反問。\n- 遇到學生容易焦慮、挫折的環節（上台、考試、錯誤），優先給降低威脅感的做法。";
+document.getElementById('tpre').textContent=TUNE_PROMPT;
+const EX={g:"國中 7 年級",u:"一元一次方程式應用問題",t:"45 分鐘",d:"1. 複習上一節的解方程式步驟（5 分）\n2. 老師講解課本例題 2 題：年齡問題、買東西找錢問題（15 分）\n3. 學生個人寫課本練習 5 題（20 分），老師巡視\n4. 抽兩位學生上台寫答案、全班對答案、收作業（5 分）"};
+document.getElementById('tex').onclick=()=>{tg.value=EX.g;tu.value=EX.u;tt.value=EX.t;td.value=EX.d.replace(/\\n/g,'\n')};
+function tuneInput(){return `${TUNE_PROMPT}\n\n# 老師提供的課程設計\n- 年級：${tg.value}\n- 單元：${tu.value||'（未提供）'}\n- 時間：${tt.value||'（未提供）'}\n\n${td.value.trim()}`}
+document.getElementById('tcopyp').onclick=function(){if(!td.value.trim()){tnote('請先貼上你的課程設計，再複製指令。');return}copyText(tuneInput(),this)};
+function tnote(m){document.getElementById('tnote').textContent=m}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function inl(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`([^`]+)`/g,'<code>$1</code>')}
+function md(src){
+  const L=src.split('\n');let h='',i=0;
+  while(i<L.length){let l=L[i];
+    if(/^\s*\|/.test(l)){const rows=[];while(i<L.length&&/^\s*\|/.test(L[i])){rows.push(L[i]);i++}
+      const cells=r=>r.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim());
+      let out='<div class="tblw"><table>';let body=rows;
+      if(rows.length>1&&/^[\s|:-]+$/.test(rows[1])){out+='<thead><tr>'+cells(rows[0]).map(c=>`<th>${inl(c)}</th>`).join('')+'</tr></thead>';body=rows.slice(2)}
+      out+='<tbody>'+body.map(r=>'<tr>'+cells(r).map(c=>`<td>${inl(c)}</td>`).join('')+'</tr>').join('')+'</tbody></table></div>';h+=out;continue}
+    let m;
+    if(m=l.match(/^(#{1,4})\s+(.*)/)){const n=Math.min(4,m[1].length+1);h+=`<h${n}>${inl(m[2])}</h${n}>`;i++;continue}
+    if(/^\s*[-*]\s+/.test(l)){h+='<ul>';while(i<L.length&&/^\s*[-*]\s+/.test(L[i])){h+='<li>'+inl(L[i].replace(/^\s*[-*]\s+/,''))+'</li>';i++}h+='</ul>';continue}
+    if(/^\s*\d+[.、]\s+/.test(l)){h+='<ol>';while(i<L.length&&/^\s*\d+[.、]\s+/.test(L[i])){h+='<li>'+inl(L[i].replace(/^\s*\d+[.、]\s+/,''))+'</li>';i++}h+='</ol>';continue}
+    if(/^>\s?/.test(l)){h+='<blockquote>'+inl(l.replace(/^>\s?/,''))+'</blockquote>';i++;continue}
+    if(l.trim()===''||/^---+$/.test(l.trim())){i++;continue}
+    h+='<p>'+inl(l)+'</p>';i++}
+  return h}
+let tuneText='',tuneAbort=null,sampleFn;
+(async()=>{try{sampleFn=await claude.use("sample")}catch(e){sampleFn=null}
+  if(!sampleFn){document.getElementById('tgo').disabled=true;tnote('這個瀏覽畫面無法直接呼叫 AI。請按「複製完整指令」，把指令和你的設計一起貼到任何 AI 工具（例如 Claude、ChatGPT、Gemini）。')}})();
+document.getElementById('tgo').onclick=async()=>{
+  if(!td.value.trim()){tnote('請先貼上你的課程設計。');td.focus();return}
+  if(!sampleFn){tnote('目前無法呼叫 AI，請改用「複製完整指令」。');return}
+  const out=document.getElementById('tout'),go=document.getElementById('tgo'),stop=document.getElementById('tstop'),cp=document.getElementById('tcopy');
+  tuneAbort=new AbortController();go.disabled=true;stop.style.display='';cp.disabled=true;tuneText='';
+  out.innerHTML='<div class="tempty cursor">🎼 正在幫你的課微調</div>';tnote('產生中，約需 30–60 秒……');
+  try{
+    const r=await sampleFn(tuneInput(),{signal:tuneAbort.signal,cache:false,modelTier:'default',onText:({text})=>{tuneText=text;out.innerHTML=md(text)+'<span class="cursor"></span>'}});
+    tuneText=r.text;out.innerHTML=md(r.text);tnote(r.truncated?'建議較長，已顯示到上限。可縮短課程設計後再試。':'完成！可按「複製建議」貼到你的教案。');
+  }catch(e){
+    if(tuneText)out.innerHTML=md(tuneText);
+    const c=e&&e.code;tnote(c==='not_granted'?'未取得使用 AI 的同意。可改用「複製完整指令」。':c==='rate_limited'?'使用次數暫時達上限，請稍後再試，或改用「複製完整指令」。':(e&&e.name==='AbortError')||c==='aborted'?'已停止。':'產生時發生問題，請稍後再試，或改用「複製完整指令」。');
+  }finally{go.disabled=false;stop.style.display='none';cp.disabled=!tuneText}
+};
+document.getElementById('tstop').onclick=()=>{if(tuneAbort)tuneAbort.abort()};
+document.getElementById('tcopy').onclick=function(){if(tuneText)copyText(tuneText,this)};
+
+document.querySelectorAll('.nb-qb').forEach(b=>b.onclick=()=>{const sp=b.querySelector('span');copyText(b.dataset.q,sp)});
+
+route();
+</script>
+</body>
+</html>
