@@ -379,6 +379,15 @@ pre.tpl{white-space:pre-wrap;background:#0f2140;color:#e6eefb;border-radius:12px
 
 .helper-pick{margin:6px 0 0;padding-left:22px;color:var(--navy-ink)}
 .helper-pick li{padding:3px 0}
+.up-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--navy);font-size:14px}
+.up-btn{cursor:pointer;background:var(--navy);color:#fff!important;padding:7px 14px;border-radius:10px;font-weight:700;font-size:14px;display:inline-flex!important;flex-direction:row!important}
+.up-btn:hover{background:var(--navy-2)}
+.up-hint{font-size:12.5px;color:var(--muted);margin:4px 0 0}
+.up-info{margin-top:6px;font-size:13.5px;background:var(--green-soft);color:var(--green);border-radius:8px;padding:6px 10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.up-info.err{background:var(--alert-bg);color:#b33a1c}
+.up-info button{border:0;background:none;color:inherit;font-weight:700;cursor:pointer}
+#td.drag{border-color:var(--green);background:#f3f8ef;outline:3px dashed var(--green);outline-offset:-6px}
+
 footer{text-align:center;color:var(--muted);font-size:13px;padding:20px;border-top:1px solid var(--line)}
 
 @media (max-width:900px){
@@ -922,7 +931,13 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:20px;border-t
         <label>單元<input id="tu" placeholder="例：一元一次方程式應用問題"></label>
         <label>時間<input id="tt" placeholder="例：45 分鐘"></label>
       </div>
-      <label class="full">你的課程設計（活動、流程或整節課）
+      <div class="up-row">
+        <b>你的課程設計（活動、流程或整節課）</b>
+        <label class="up-btn">📎 上傳教案檔<input type="file" id="tfile" accept=".md,.markdown,.txt,.docx,.pdf" hidden></label>
+      </div>
+      <div class="up-hint">支援 <b>.md</b>、<b>.txt</b>、<b>.docx</b>（Word）、<b>.pdf</b>，也可以直接把檔案拖曳到下方框內。讀取後的文字會放進框內，可以再修改。</div>
+      <div id="tfinfo" class="up-info" style="display:none"></div>
+      <label class="full" style="margin-top:6px">
         <textarea id="td" rows="10" placeholder="例：&#10;1. 複習上一節（5 分）&#10;2. 老師講解例題 2 題（15 分）&#10;3. 學生個人寫課本練習 5 題（20 分）&#10;4. 對答案、收作業（5 分）"></textarea></label>
       <div class="row" style="justify-content:flex-start">
         <button class="btn ghost" id="tex">📝 填入範例</button>
@@ -1349,6 +1364,63 @@ document.getElementById('tstop').onclick=()=>{if(tuneAbort)tuneAbort.abort()};
 document.getElementById('tcopy').onclick=function(){if(tuneText)copyText(tuneText,this)};
 
 document.querySelectorAll('.nb-qb').forEach(b=>b.onclick=()=>{const sp=b.querySelector('span');copyText(b.dataset.q,sp)});
+
+/* ===== Lesson file upload ===== */
+const MAXC=20000;
+function finfo(msg,err){const el=document.getElementById('tfinfo');el.style.display='';el.className='up-info'+(err?' err':'');el.innerHTML=`<span>${msg}</span><button onclick="this.parentNode.style.display='none'">✕</button>`}
+async function inflateRaw(u8){const ds=new DecompressionStream('deflate-raw');const r=new Response(new Blob([u8]).stream().pipeThrough(ds));return new Uint8Array(await r.arrayBuffer())}
+async function unzipEntry(buf,name){
+  const dv=new DataView(buf),u8=new Uint8Array(buf);let eocd=-1;
+  for(let i=u8.length-22;i>=Math.max(0,u8.length-66000);i--){if(dv.getUint32(i,true)===0x06054b50){eocd=i;break}}
+  if(eocd<0)throw new Error('zip');
+  let p=dv.getUint32(eocd+16,true);const n=dv.getUint16(eocd+10,true);const td=new TextDecoder();
+  for(let k=0;k<n;k++){
+    const method=dv.getUint16(p+10,true),csize=dv.getUint32(p+20,true),fl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),off=dv.getUint32(p+42,true);
+    const fn=td.decode(u8.subarray(p+46,p+46+fl));
+    if(fn===name){const lfl=dv.getUint16(off+26,true),lel=dv.getUint16(off+28,true);const data=u8.subarray(off+30+lfl+lel,off+30+lfl+lel+csize);
+      return td.decode(method===0?data:await inflateRaw(data))}
+    p+=46+fl+el+cl}
+  throw new Error('nodoc')}
+function docxText(xml){
+  const doc=new DOMParser().parseFromString(xml,'application/xml');const W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+  const body=doc.getElementsByTagNameNS(W,'body')[0];const out=[];
+  const para=p=>{let t='';p.querySelectorAll('*').forEach(n=>{if(n.namespaceURI!==W)return;if(n.localName==='t')t+=n.textContent;else if(n.localName==='tab')t+='\t';else if(n.localName==='br')t+='\n'});return t};
+  const walk=el=>{for(const c of el.children){if(c.namespaceURI!==W)continue;
+    if(c.localName==='p'){out.push(para(c))}
+    else if(c.localName==='tbl'){for(const tr of c.children){if(tr.localName!=='tr')continue;const cells=[];for(const tc of tr.children){if(tc.localName!=='tc')continue;cells.push([...tc.children].filter(x=>x.localName==='p').map(para).join(' ').trim())}out.push('| '+cells.join(' | ')+' |')}}
+    else if(c.localName==='sdt'){const sc=[...c.children].find(x=>x.localName==='sdtContent');if(sc)walk(sc)}}};
+  if(body)walk(body);return out.join('\n').replace(/\n{3,}/g,'\n\n').trim()}
+function loadScript(src){return new Promise((ok,no)=>{const sc=document.createElement('script');sc.src=src;sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)})}
+async function pdfText(buf){
+  const base='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+  if(!window.pdfjsLib)await loadScript(base+'pdf.min.js');
+  pdfjsLib.GlobalWorkerOptions.workerSrc=base+'pdf.worker.min.js';
+  const pdf=await pdfjsLib.getDocument({data:buf,isEvalSupported:false}).promise;let t='';
+  for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();let line='',lastY=null;
+    c.items.forEach(it=>{const y=it.transform[5];if(lastY!==null&&Math.abs(y-lastY)>2){t+=line.trim()+'\n';line=''}line+=it.str;lastY=y});t+=line.trim()+'\n\n'}
+  return t.replace(/\n{3,}/g,'\n\n').trim()}
+async function readLesson(file){
+  const nm=file.name,ext=(nm.split('.').pop()||'').toLowerCase();
+  finfo(`⏳ 讀取「${esc(nm)}」中……`);
+  try{
+    let text='';
+    if(['md','markdown','txt'].includes(ext))text=await file.text();
+    else if(ext==='docx')text=docxText(await unzipEntry(await file.arrayBuffer(),'word/document.xml'));
+    else if(ext==='pdf')text=await pdfText(await file.arrayBuffer());
+    else{finfo('這個檔案格式不支援，請上傳 .md、.txt、.docx 或 .pdf。若是 .doc 舊格式，請先另存成 .docx。',true);return}
+    text=text.trim();
+    if(!text){finfo(`「${esc(nm)}」讀不到文字（可能是掃描圖檔）。請改為複製貼上文字。`,true);return}
+    let cut=false;if(text.length>MAXC){text=text.slice(0,MAXC);cut=true}
+    td.value=td.value.trim()?td.value.trim()+'\n\n---（以下來自 '+nm+'）---\n'+text:text;
+    if(!tu.value.trim()){const m=nm.replace(/\.[^.]+$/,'');tu.placeholder='例：'+m}
+    finfo(`✅ 已讀入「${esc(nm)}」（${text.length.toLocaleString()} 字${cut?'，內容較長，只保留前 '+MAXC.toLocaleString()+' 字':''}）。可以在框內刪修後再按「開始微調」。`);
+  }catch(e){
+    finfo(ext==='pdf'?'PDF 讀取失敗（可能需要連網載入讀取工具，或檔案受保護）。請改為複製貼上文字。':'檔案讀取失敗，請確認檔案沒有損壞，或改為複製貼上文字。',true)}
+}
+document.getElementById('tfile').onchange=e=>{const f=e.target.files[0];if(f)readLesson(f);e.target.value=''};
+['dragenter','dragover'].forEach(ev=>td.addEventListener(ev,e=>{e.preventDefault();td.classList.add('drag')}));
+['dragleave','drop'].forEach(ev=>td.addEventListener(ev,e=>{e.preventDefault();td.classList.remove('drag')}));
+td.addEventListener('drop',e=>{const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)readLesson(f)});
 
 route();
 </script>
